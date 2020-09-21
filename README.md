@@ -1,8 +1,22 @@
 # Cpts-415-Project
 
-## Description
+## Contributors
+- Ben Gaull
+- Kendrick Mitchell
+- Sean Oh
+- Will Holbert
+
+## Project Description
+
+### **Problem**
+
+### **Outcome**
 
 
+## Repo Housekeeping
+- Create branches for each individual part of the project.  This helps keep the repo organized and also reduces update times when code is committed.
+- When a folder is added/removed from the Google drive, please update the links below to reflect the changes.
+- When you find helpful resources libraries or code, add the links to the '*Tools and References*' section below.
 
 
 ## [Google Drive](https://drive.google.com/drive/folders/1NY7JXF7GLhAM65Uj7jW56QMx020L2Qow?usp=sharing) Quick Links
@@ -23,7 +37,7 @@
 
 ---
 
-## Tools References
+## Tools and References
 ### Dataset
 - [Source](https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page)
 
