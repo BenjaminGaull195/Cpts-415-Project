@@ -14,6 +14,7 @@
 
 
 ## Repo Housekeeping
+- Please utilize the Projects section of this repo to track our progress on the project
 - Create branches for each individual part of the project.  This helps keep the repo organized and also reduces update times when code is committed.
 - When a folder is added/removed from the Google drive, please update the links below to reflect the changes.
 - When you find helpful resources libraries or code, add the links to the '*Tools and References*' section below.
@@ -35,7 +36,7 @@
 
 
 
----
+
 
 ## Tools and References
 ### Dataset
