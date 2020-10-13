@@ -1,0 +1,5 @@
+Instance ID: i-01d4ab269e14e0eb3
+Private Key File: group12.pem
+
+Public IPv4 Address: 3.138.109.90
+Public IPv4 DNS: ec2-3-138-109-90.us-east-2.compute.amazonaws.com
