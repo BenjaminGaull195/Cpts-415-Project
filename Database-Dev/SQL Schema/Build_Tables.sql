@@ -8,7 +8,7 @@ CREATE TABLE TaxiZones (
 
 -- dispatching_base_num,pickup_datetime,dropoff_datetime,PULocationID,DOLocationID,SR_Flag
 CREATE TABLE FHV_Trip_Records (
-    Dispatch_base_num INT,
+    Dispatch_base_num VARCHAR,
     Pickup_datetime VARCHAR NOT NULL,
     Dropoff_datetime VARCHAR NOT NULL,
     PULocationID INT NOT NULL,
