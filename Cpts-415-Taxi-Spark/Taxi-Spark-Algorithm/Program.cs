@@ -79,15 +79,15 @@ namespace Taxi_Spark_Algorithm
         public static double Getis_Ord_Stat(List<NeighborData> neighbors)
         {
             //compute sum 1
-            int _sum1 = Sum1(ref neighbors);
+            double _sum1 = Sum1(ref neighbors);
 
 
             //compute sum 2
-            int _sum2 = Sum2(ref neighbors);
+            double _sum2 = Sum2(ref neighbors);
 
 
             //compute sum 3
-            int _sum3 = Sum3(ref neighbors);
+            double _sum3 = Sum3(ref neighbors);
 
 
             //compute X
@@ -159,7 +159,7 @@ namespace Taxi_Spark_Algorithm
 
             foreach (NeighborData data in neighbors)
             {
-                sum += (data.attibute * data.attribute);
+                sum += (data.attribute * data.attribute);
             }
 
 
