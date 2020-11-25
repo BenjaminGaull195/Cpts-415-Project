@@ -12,7 +12,8 @@ using System.Collections.Concurrent;
 
 //Formatted/Semi-structured IO
 using System.Xml;
-
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 //Spark libraries
 using Microsoft.Spark;
