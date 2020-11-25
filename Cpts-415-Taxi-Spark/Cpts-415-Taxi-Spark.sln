@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1231
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Taxi-Spark-Algorithm", "Taxi-Spark-Algorithm\Taxi-Spark-Algorithm.csproj", "{9872EDAA-29FA-4905-96CD-0903514F4F90}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9872EDAA-29FA-4905-96CD-0903514F4F90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9872EDAA-29FA-4905-96CD-0903514F4F90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9872EDAA-29FA-4905-96CD-0903514F4F90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9872EDAA-29FA-4905-96CD-0903514F4F90}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FE16B461-3A89-49BF-AF7C-3D0787DE7125}
+	EndGlobalSection
+EndGlobal
