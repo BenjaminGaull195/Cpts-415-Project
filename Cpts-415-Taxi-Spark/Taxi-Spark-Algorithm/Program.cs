@@ -25,10 +25,14 @@ using Microsoft.Spark.Sql;
 namespace Taxi_Spark_Algorithm
 {
 
-    class NeighborData
+    class NeighborData : IDisposable
     {
         public int attribute { get; set; }
         public double distance { get; set; }
+        public void Dispose()
+        {
+
+        }
     }
     
     class TaxiZoneData
@@ -71,17 +75,16 @@ namespace Taxi_Spark_Algorithm
             //list used to track output data
             ComputationData computationData = new ComputationData();
 
+            List<NeighborData> neighbors = new List<NeighborData>();
             for (int i = 0; i < num_taxi_zones; ++i)
             {
-                //Query Data
-
+               //Query for current taxi zone
 
 
 
 
                 //Compute Getis-Ord Statistic and add z-score to output list
-
-                computationData.taxiZoneData.Add(new TaxiZoneData() { zoneID = i, zscore = Getis_Ord_Stat()});
+                computationData.taxiZoneData.Add(new TaxiZoneData() { zoneID = i, zscore = Getis_Ord_Stat(neighbors)});
             }
 
             //output data
@@ -124,7 +127,7 @@ namespace Taxi_Spark_Algorithm
             List<Task<double>> tasks = new List<Task<double>>();
 
             TaskFactory<double> factory = new TaskFactory<double>();
-
+            Task t1 = factory.StartNew(Sum1(), );
 
             //compute stat and return
             
