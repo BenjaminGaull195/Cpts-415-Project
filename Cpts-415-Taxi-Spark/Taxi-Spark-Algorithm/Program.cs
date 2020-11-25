@@ -41,11 +41,14 @@ namespace Taxi_Spark_Algorithm
     {
         public ComputationData()
         {
-
+            queryStartDateTime = "";
+            queryEndDateTime = "";
+            taxiZoneData = new List<TaxiZoneData>();
         }
 
-
-        List<TaxiZoneData> taxiZoneData;
+        public string queryStartDateTime { get; set; }
+        public string queryEndDateTime { get; set; }
+        public List<TaxiZoneData> taxiZoneData { get; set; }
 
     }
 
@@ -63,10 +66,10 @@ namespace Taxi_Spark_Algorithm
 
             //Initial queries
             int num_taxi_zones = 0;
-                       
+
 
             //list used to track output data
-            ComputationData computationData = 
+            ComputationData computationData = new ComputationData();
 
             for (int i = 0; i < num_taxi_zones; ++i)
             {
@@ -77,12 +80,13 @@ namespace Taxi_Spark_Algorithm
 
 
                 //Compute Getis-Ord Statistic and add z-score to output list
-                zoneScore.Add(new TaxiZoneData() { zoneID = i, zscore = Getis_Ord_Stat()});
+
+                computationData.taxiZoneData.Add(new TaxiZoneData() { zoneID = i, zscore = Getis_Ord_Stat()});
             }
 
             //output data
             string jsonString;
-            jsonString = JsonSerializer.Serialize(zoneScore);
+            jsonString = JsonSerializer.Serialize(computationData, new JsonSerializerOptions() { WriteIndented = true});
             File.WriteAllText("output.Json", jsonString);
 
 
