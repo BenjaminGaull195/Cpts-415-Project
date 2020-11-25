@@ -61,7 +61,7 @@ namespace Taxi_Spark_Algorithm
         static void Main(string[] args)
         {
             //Initialize Spark SQL session 
-            SparkSession spark = SparkSession;
+            SparkSession spark = new SparkSession();
             Dataframe dataFrame = spark.read().Csv(input);
 
 
@@ -86,6 +86,7 @@ namespace Taxi_Spark_Algorithm
 
                 //Compute Getis-Ord Statistic and add z-score to output list
                 computationData.taxiZoneData.Add(new TaxiZoneData() { zoneID = i, zscore = Getis_Ord_Stat(neighbors)});
+                neighbors.Clear();
             }
 
             //output data
@@ -125,13 +126,37 @@ namespace Taxi_Spark_Algorithm
             double _S = S(ref neighbors, _X);
             */
             //Parallel Version
-            List<Task<double>> tasks = new List<Task<double>>();
 
+            //TaskFactory to launch tasks, list of tasks to for task management, uses default TaskScheduler
+            List<Task<double>> tasks = new List<Task<double>>();
             TaskFactory<double> factory = new TaskFactory<double>();
-            Task t1 = factory.StartNew(Sum1(), );
+
+            //start tasks for Sum1, SUm2, Sum3, X
+            Task<double> T = factory.StartNew(()=>Sum1(ref neighbors));
+            tasks.Add(T);
+
+            T = factory.StartNew(() => Sum2(ref neighbors));
+            tasks.Add(T);
+
+            T = factory.StartNew(() => Sum3(ref neighbors));
+            tasks.Add(T);
+
+            T = factory.StartNew(() => X(ref neighbors));
+            tasks.Add(T);
+
+            //wait for all tasks to complete
+            Task.WaitAll();
+
+            //get results from tasks
+            _sum1 = tasks[0].Result;
+            _sum2 = tasks[1].Result;
+            _sum3 = tasks[2].Result;
+            _X = tasks[3].Result;
+
+            //compute S
+            _S = S(ref neighbors, _X);
 
             //compute stat and return
-            
             double zscore = (_sum1 - (_X * _sum2)) / (_S * Math.Sqrt((neighbors.Count * _sum3 - _sum2) / (neighbors.Count-1)));
             return zscore;
 
