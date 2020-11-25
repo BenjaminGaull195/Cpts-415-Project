@@ -61,7 +61,8 @@ namespace Taxi_Spark_Algorithm
         static void Main(string[] args)
         {
             //Initialize Spark SQL session 
-
+            SparkSession spark = SparkSession;
+            Dataframe dataFrame = spark.read().Csv(input);
 
 
             //Build Dataset
