@@ -138,7 +138,15 @@ namespace Taxi_Spark_Algorithm
 
 
         }
-
+        public static bool IsNeighbor(double radius, double x1, double y1, double x2, double y2)
+        {
+            x1 = Math.Pow((x1 - x2),2);
+            y1 = Math.Pow((y1 - y2),2);
+            if (radius >= Math.Sqrt((x1 + y1))){
+                return true;
+            }
+            return false;
+        }//NeighborData and TaxiZonedata could be used to provide coordinates. A radius should be some constant in main or global
 
         private static double Sum1(ref List<NeighborData> neighbors)
         {
@@ -196,7 +204,6 @@ namespace Taxi_Spark_Algorithm
             {
                 sum += (data.attribute * data.attribute);
             }
-
 
             return Math.Sqrt((sum/neighbors.Count) - Math.Pow(X, 2));
         }
