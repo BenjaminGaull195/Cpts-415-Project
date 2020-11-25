@@ -99,6 +99,9 @@ namespace Taxi_Spark_Algorithm
 
 
             //compute stat and return
+            
+            double final_Sum = (_sum1 - (_X * _sum2))/ ((_S * sqrt((neighbors.count * _sum3 - _sum2) / (neigbors.count-1));
+            return final_Sum;
 
 
 
@@ -163,7 +166,7 @@ namespace Taxi_Spark_Algorithm
             }
 
 
-            return sum;
+            return sqrt((sum/neighbors.count) - (X * X));
         }
 
 
