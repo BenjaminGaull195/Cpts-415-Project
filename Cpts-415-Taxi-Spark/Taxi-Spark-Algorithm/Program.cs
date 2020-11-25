@@ -13,7 +13,6 @@ using System.Collections.Concurrent;
 //Formatted/Semi-structured IO
 using System.Xml;
 
-
 //Spark libraries
 using Microsoft.Spark;
 using Microsoft.Spark.Sql;
@@ -48,8 +47,11 @@ namespace Taxi_Spark_Algorithm
             //Build Dataset
                        
             
+
+            //Initial queries
             int num_taxi_zones = 0;
                        
+
             //list used to track output data
             List<TaxiZoneData> zoneScore = new List<TaxiZoneData>();
 
@@ -77,23 +79,23 @@ namespace Taxi_Spark_Algorithm
         public static double Getis_Ord_Stat(List<NeighborData> neighbors)
         {
             //compute sum 1
-
+            int _sum1 = Sum1(ref neighbors);
 
 
             //compute sum 2
-
+            int _sum2 = Sum2(ref neighbors);
 
 
             //compute sum 3
-
+            int _sum3 = Sum3(ref neighbors);
 
 
             //compute X
-
+            double _X = X(ref neighbors);
 
 
             //compute S
-
+            double _S = S(ref neighbors, _X);
 
 
             //compute stat and return
@@ -103,7 +105,7 @@ namespace Taxi_Spark_Algorithm
         }
 
 
-        private int Sum1(ref List<NeighborData> neighbors)
+        private static int Sum1(ref List<NeighborData> neighbors)
         {
             int sum = 0;
 
@@ -115,7 +117,7 @@ namespace Taxi_Spark_Algorithm
             return sum;
         }
 
-        private int Sum2(ref List<NeighborData> neighbors)
+        private static int Sum2(ref List<NeighborData> neighbors)
         {
             int sum = 0;
 
@@ -127,7 +129,7 @@ namespace Taxi_Spark_Algorithm
             return sum;
         }
 
-        private int Sum3(ref List<NeighborData> neighbors)
+        private static int Sum3(ref List<NeighborData> neighbors)
         {
             int sum = 0;
 
@@ -139,7 +141,7 @@ namespace Taxi_Spark_Algorithm
             return sum;
         }
 
-        private double X(ref List<NeighborData> neighbors)
+        private static double X(ref List<NeighborData> neighbors)
         {
             int sum = 0;
 
@@ -151,7 +153,7 @@ namespace Taxi_Spark_Algorithm
             return sum / neighbors.Count;
         }
 
-        private double S(ref List<NeighborData> neighbors, double X)
+        private static double S(ref List<NeighborData> neighbors, double X)
         {
             int sum = 0;
 
