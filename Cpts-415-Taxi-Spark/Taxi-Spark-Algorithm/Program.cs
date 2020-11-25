@@ -162,8 +162,8 @@ namespace Taxi_Spark_Algorithm
                 sum += (data.attribute * data.attribute);
             }
 
-
-            return sum;
+            
+            return Math.Sqrt((sum / neighbors.Count) - (Math.Pow(X, 2)));
         }
 
 
