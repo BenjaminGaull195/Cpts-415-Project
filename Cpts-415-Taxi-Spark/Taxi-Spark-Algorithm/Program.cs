@@ -37,6 +37,17 @@ namespace Taxi_Spark_Algorithm
         public double zscore { get; set; }
     }
 
+    class ComputationData
+    {
+        public ComputationData()
+        {
+
+        }
+
+
+        List<TaxiZoneData> taxiZoneData;
+
+    }
 
     class Program
     {
@@ -55,7 +66,7 @@ namespace Taxi_Spark_Algorithm
                        
 
             //list used to track output data
-            List<TaxiZoneData> zoneScore = new List<TaxiZoneData>();
+            ComputationData computationData = 
 
             for (int i = 0; i < num_taxi_zones; ++i)
             {
