@@ -105,37 +105,37 @@ namespace Taxi_Spark_Algorithm
         }
 
 
-        private static int Sum1(ref List<NeighborData> neighbors)
+        private static double Sum1(ref List<NeighborData> neighbors)
         {
-            int sum = 0;
+            double sum = 0;
 
             foreach (NeighborData data in neighbors)
             {
-
+                sum += data.distance * data.attribute;
             }
 
             return sum;
         }
 
-        private static int Sum2(ref List<NeighborData> neighbors)
+        private static double Sum2(ref List<NeighborData> neighbors)
         {
-            int sum = 0;
+            double sum = 0;
 
             foreach (NeighborData data in neighbors)
             {
-
+                sum += data.distance;
             }
 
             return sum;
         }
 
-        private static int Sum3(ref List<NeighborData> neighbors)
+        private static double Sum3(ref List<NeighborData> neighbors)
         {
-            int sum = 0;
+            double sum = 0;
 
             foreach (NeighborData data in neighbors)
             {
-
+                sum += (data.distance * data.distance);
             }
 
             return sum;
@@ -143,11 +143,11 @@ namespace Taxi_Spark_Algorithm
 
         private static double X(ref List<NeighborData> neighbors)
         {
-            int sum = 0;
+            double sum = 0;
 
             foreach (NeighborData data in neighbors)
             {
-
+                sum += data.attribute;
             }
 
             return sum / neighbors.Count;
@@ -155,11 +155,11 @@ namespace Taxi_Spark_Algorithm
 
         private static double S(ref List<NeighborData> neighbors, double X)
         {
-            int sum = 0;
+            double sum = 0;
 
             foreach (NeighborData data in neighbors)
             {
-
+                sum += (data.attibute * data.attribute);
             }
 
 
