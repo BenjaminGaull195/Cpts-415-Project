@@ -1,10 +1,20 @@
-﻿using System;
+﻿//commonly used libraries
+using System;
+using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.IO;
+using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 
+
+//Formatted/Semi-structured IO
+using System.Xml;
+
+
+//Spark libraries
 using Microsoft.Spark;
 using Microsoft.Spark.Sql;
 
