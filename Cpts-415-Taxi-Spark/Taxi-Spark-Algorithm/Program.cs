@@ -13,6 +13,7 @@ using System.Collections.Concurrent;
 //Formatted/Semi-structured IO
 using System.Xml;
 
+
 //Spark libraries
 using Microsoft.Spark;
 using Microsoft.Spark.Sql;
@@ -78,6 +79,10 @@ namespace Taxi_Spark_Algorithm
         //TODO: Add parallelization
         public static double Getis_Ord_Stat(List<NeighborData> neighbors)
         {
+            double _sum1 = 0, _sum2 = 0, _sum3 = 0, _X = 0, _S = 0;
+
+            /*
+            //Serial Version
             //compute sum 1
             double _sum1 = Sum1(ref neighbors);
 
@@ -96,6 +101,11 @@ namespace Taxi_Spark_Algorithm
 
             //compute S
             double _S = S(ref neighbors, _X);
+            */
+            //Parallel Version
+            List<Task<double>> tasks = new List<Task<double>>();
+
+            TaskFactory<double> factory = new TaskFactory<double>();
 
 
             //compute stat and return
