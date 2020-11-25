@@ -81,7 +81,9 @@ namespace Taxi_Spark_Algorithm
             }
 
             //output data
-
+            string jsonString;
+            jsonString = JsonSerializer.Serialize(zoneScore);
+            File.WriteAllText("output.Json", jsonString);
 
 
         }
