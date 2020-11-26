@@ -233,7 +233,30 @@ namespace Taxi_Spark_Algorithm
             return Math.Sqrt((sum/neighbors.Count) - Math.Pow(X, 2));
         }
 
+        /*
+        private static void BuildNeighborTable(int num_zones, double radius, SparkContext C){//We require a table detailing a neighboring regions in the DB.
+        DataFrame df; //The table holding all taxizone information
+        DataFrame df2; //The table being accumulated with neighbor relations.
+        DataFrame df3; //Intermediary dataframe
+        DataFrame df4; //Intermediary dataframe
+        //Iteratively pull the coordinates from the taxi zone table. It only has num_zones items which should be 256 
+        for(int i = 0; i <= num_zones; ++i)
+            {
+                df3 = df.Filter(df("ZoneID") == i).Show(0);
+                for(int j = 0; j <= num_zones; ++j)
+                {
+                    df4 = df.Filter(df("ZoneID") == i).Show(0);
 
+                    if(IsNeighbor(radius,,,,) && i != j){//Need help extracting values from the coordinates from df3 and df4.
+                        df4 = C.(
+                        (i, j)
+                        ).toDF("Current_ID", "Neighbor_ID");//The zone ids within df3 and df4
+                        df2.Union(df4).Show(0);
+                    }
+                    //In a nested loop compare coordinates with all other regions which you also pull from the taxi zone table
+                }
+            }
+        }//This function is intended to precompute neighbor relations which can be easily retrieved as distinct neighborhood lists given the current_id. These lists can be summed over to get the G* stat*/
 
 
     }
