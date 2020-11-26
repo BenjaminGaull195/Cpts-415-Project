@@ -265,3 +265,35 @@ namespace Taxi_Spark_Algorithm
     
 
 }
+
+/* We need a method to grab the amount of incoming and outgoing traffic for a zone on a specific time. 
+SELECT zoneID, cal_date, Count(*)
+FROM(
+
+SELECT * 
+FROM YELLOW
+WHERE ((pickup_zone = x OR dropoff_zone = x) AND (pickup_date = y OR dropoff_date = y))
+
+UNION
+
+SELECT * 
+FROM GREEN
+WHERE ((pickup_zone = x OR dropoff_zone = x) AND (pickup_date = y OR dropoff_date = y))
+
+UNION
+
+SELECT * 
+FROM HVF
+WHERE ((pickup_zone = x OR dropoff_zone = x) AND (pickup_date = y OR dropoff_date = y))
+
+UNION
+
+SELECT * 
+FROM HVFV
+WHERE ((pickup_zone = x OR dropoff_zone = x) AND (pickup_date = y OR dropoff_date = y))
+
+)
+GROUP BY zoneID, cal_date 
+
+//We need to split the time values apart with the calendar date and daily clock time separated.
+*/
