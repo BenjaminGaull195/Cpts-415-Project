@@ -166,7 +166,15 @@ namespace Taxi_Spark_Algorithm
 
 
         }
-
+        public static bool IsNeighbor(double radius, double x1, double y1, double x2, double y2)
+        {
+            x1 = Math.Pow((x1 - x2),2);
+            y1 = Math.Pow((y1 - y2),2);
+            if (radius >= Math.Sqrt((x1 + y1))){
+                return true;
+            }
+            return false;
+        }//NeighborData and TaxiZonedata could be used to provide coordinates. A radius should be some constant in main or global
 
         public static double Sum1(ref List<NeighborData> neighbors)
         {
@@ -225,11 +233,33 @@ namespace Taxi_Spark_Algorithm
                 sum += (data.attribute * data.attribute);
             }
 
-
             return Math.Sqrt((sum/neighbors.Count) - Math.Pow(X, 2));
         }
 
+        /*
+        private static void BuildNeighborTable(int num_zones, double radius, SparkContext C){//We require a table detailing a neighboring regions in the DB.
+            DataFrame df; //The dataframe holding the taxizone lookup table 
+            DataFrame df2; //The table being accumulated with neighbor relations.
+            DataFrame df3; //Intermediary dataframe
+            DataFrame df4; //Intermediary dataframe
+            //Iteratively pull the coordinates from the taxi zone table. It only has num_zones items which should be 256 
+            for(int i = 0; i <= num_zones; ++i)
+                {
+                    df3 = df.Filter(df("ZoneID") == i).Show(0);
+                    for(int j = 0; j <= num_zones; ++j)
+                    {
+                        df4 = df.Filter(df("ZoneID") == i).Show(0);
 
+                        if(IsNeighbor(radius,,,,) && i != j){//Need help extracting values from the coordinates from df3 and df4.
+                            df4 = C.(
+                            (i, j)
+                            ).toDF("Current_ID", "Neighbor_ID");//The zone ids within df3 and df4
+                            df2.Union(df4).Show(0);
+                        }
+                        //In a nested loop compare coordinates with all other regions which you also pull from the taxi zone table
+                    }
+                }
+        }//This function is intended to precompute neighbor relations which can be easily retrieved as distinct neighborhood lists given the current_id. These lists can be summed over to get the G* stat*/
 
 
     }
@@ -238,3 +268,35 @@ namespace Taxi_Spark_Algorithm
     
 
 }
+
+/* We need a method to grab the amount of incoming and outgoing traffic for a zone on a specific time. 
+SELECT zoneID, cal_date, Count(*)
+FROM(
+
+SELECT * 
+FROM YELLOW
+WHERE ((pickup_zone = x OR dropoff_zone = x) AND (pickup_date = y OR dropoff_date = y))
+
+UNION
+
+SELECT * 
+FROM GREEN
+WHERE ((pickup_zone = x OR dropoff_zone = x) AND (pickup_date = y OR dropoff_date = y))
+
+UNION
+
+SELECT * 
+FROM HVF
+WHERE ((pickup_zone = x OR dropoff_zone = x) AND (pickup_date = y OR dropoff_date = y))
+
+UNION
+
+SELECT * 
+FROM HVFV
+WHERE ((pickup_zone = x OR dropoff_zone = x) AND (pickup_date = y OR dropoff_date = y))
+
+)
+GROUP BY zoneID, cal_date 
+
+//We need to split the time values apart with the calendar date and daily clock time separated.
+*/
