@@ -61,9 +61,12 @@ namespace Taxi_Spark_Algorithm
         static void Main(string[] args)
         {
             //Initialize Spark SQL session 
-            SparkSession spark = new SparkSession();
-            Dataframe dataFrame = spark.read().Csv(input);
-
+            SparkSession spark = SparkSession.Builder().AppName("Spark_Taxi_Hotspots").GetOrCreate();
+            DataFrame taxi_zones = spark.Read().Csv("");
+            DataFrame yellow_tripdata = spark.Read().Csv("");
+            DataFrame green_tripdata = spark.Read().Csv("");
+            DataFrame fhv_tripdata = spark.Read().Csv("");
+            DataFrame hvfhv_tripdata = spark.Read().Csv("");
 
             //Build Dataset
                        
@@ -165,7 +168,7 @@ namespace Taxi_Spark_Algorithm
         }
 
 
-        private static double Sum1(ref List<NeighborData> neighbors)
+        public static double Sum1(ref List<NeighborData> neighbors)
         {
             double sum = 0;
 
@@ -177,7 +180,7 @@ namespace Taxi_Spark_Algorithm
             return sum;
         }
 
-        private static double Sum2(ref List<NeighborData> neighbors)
+        public static double Sum2(ref List<NeighborData> neighbors)
         {
             double sum = 0;
 
@@ -189,7 +192,7 @@ namespace Taxi_Spark_Algorithm
             return sum;
         }
 
-        private static double Sum3(ref List<NeighborData> neighbors)
+        public static double Sum3(ref List<NeighborData> neighbors)
         {
             double sum = 0;
 
@@ -201,7 +204,7 @@ namespace Taxi_Spark_Algorithm
             return sum;
         }
 
-        private static double X(ref List<NeighborData> neighbors)
+        public static double X(ref List<NeighborData> neighbors)
         {
             double sum = 0;
 
@@ -213,7 +216,7 @@ namespace Taxi_Spark_Algorithm
             return sum / neighbors.Count;
         }
 
-        private static double S(ref List<NeighborData> neighbors, double X)
+        public static double S(ref List<NeighborData> neighbors, double X)
         {
             double sum = 0;
 
