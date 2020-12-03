@@ -97,7 +97,7 @@ namespace Taxi_Spark_Algorithm
                 neighbors.Clear();
 
                 //Console output to display computation 
-                Console.Write("\rProgress: {0}/{1} - {2:P}", i, num_taxi_zones, i/num_taxi_zones);
+                Console.Write(String.Format("\rProgress: {0}/{1} - {2:P}", i, num_taxi_zones, i/num_taxi_zones));
             }
 
             //output data data as JSON file
