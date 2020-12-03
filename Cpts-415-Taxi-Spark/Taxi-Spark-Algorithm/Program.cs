@@ -67,20 +67,20 @@ namespace Taxi_Spark_Algorithm
             //Build Dataset
             //Dataframe YellowTaxi_dataFrame = spark.read().Csv(input);
             //Dataframe Greentaxi_dataFrame = spark.read().Csv(input2);
-            //Dataframe Tripsone_dataFrame = spark.read().Csv(input3);
-            //Dataframe Tripstwo_dataFrame = spark.read().Csv(input4);
+            //Dataframe Tripsfhv_dataFrame = spark.read().Csv(input3);
+            //Dataframe Tripshvfhv_dataFrame = spark.read().Csv(input4);
             //Dataframe Zonedata_dataFrame = spark.read().Csv(input5);
             
             //Dataframe Master_Frame;
             //Master_Frame.join(YellowTaxi_dataFrame);
             //Master_Frame.join(Greentaxi_dataframe);
-            //Master_Frame.join(tripsone_dataframe);
-            //Master_Frame.join(tripstwo_dataframe);
+            //Master_Frame.join(tripsfhv_dataframe);
+            //Master_Frame.join(tripshvfhv_dataframe);
             //Master_Frame.join(zonedata_dataframe);
             
             //Dataframe Trips_Master;
-            //Trips_Master.join(tripsone_dataframe);
-            //Trips_Master.join(tripstwo_dataframe);
+            //Trips_Master.join(tripsfhv_dataframe);
+            //Trips_Master.join(tripshvfhv_dataframe);
             
             //Dataframe Taxi_Master;
             //Taxi_Master.join(YellowTaxi_dataFrame);
