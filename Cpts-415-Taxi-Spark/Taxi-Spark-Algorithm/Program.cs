@@ -285,7 +285,6 @@ namespace Taxi_Spark_Algorithm
 /* We need a method to grab the amount of incoming and outgoing traffic for a zone on a specific time. 
 SELECT zoneID, cal_date, Count(*)
 FROM(
-
 SELECT zoneID,cal_id,trip_id 
 FROM YELLOW
 
@@ -307,10 +306,18 @@ UNION
 SELECT  zoneID,cal_id,trip_id 
 FROM HVFV
 
-
 )
 GROUP BY zoneID, cal_date 
 
 //We need to split the time values apart with the calendar date and daily clock time separated if we want to do something like this.
 */
 //Dataframe union and dataframe select are key
+<<<<<<< Updated upstream
+=======
+
+//Plan of attack - Kendrick Mitchell
+//1. Read files locally in relation to the machine running the DB. Parsing will be important to do early on. 
+//2. Either aggregate all files together or preprocess them all together to have equal schemas for future dataframe operations. Ex. Make yellow_taxi_id = green_taxi_id = vehicleforhire_id
+//3. Apply the above aggregate function to begin running iterations of the G* algorithm.  
+//Iterations of the G* are determined by maximum and minimum dates for the data. Start in the farthest past then proceed month by month/day/year.
+>>>>>>> Stashed changes
