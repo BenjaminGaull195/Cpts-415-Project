@@ -65,26 +65,26 @@ namespace Taxi_Spark_Algorithm
 
 
             //Build Dataset
-            //Dataframe YellowTaxi_dataFrame = spark.read().Csv(yellow_tripdata_2020-01.csv);
-            //Dataframe Greentaxi_dataFrame = spark.read().Csv(green_tripdata_2020-01.csv));
-            //Dataframe Tripsfhv_dataFrame = spark.read().Csv(fhv_tripdata_2020-01.csv));
-            //Dataframe Tripsfhvhv_dataFrame = spark.read().Csv(fhvhv_tripdata_2020-01.csv));
-            //Dataframe Zonedata_dataFrame = spark.read().Csv(zones_data.csv); I don't know the file name - Will
+            Dataframe YellowTaxi_dataFrame = spark.read().Csv("yellow_tripdata_2020-01.csv");
+            Dataframe Greentaxi_dataFrame = spark.read().Csv("green_tripdata_2020-01.csv");
+            Dataframe Tripsfhv_dataFrame = spark.read().Csv("fhv_tripdata_2020-01.csv");
+            Dataframe Tripsfhvhv_dataFrame = spark.read().Csv("fhvhv_tripdata_2020-01.csv");
+            //Dataframe Zonedata_dataFrame = spark.read().Csv("zones_data.csv"); I don't know the file name - Will
             
-            //Dataframe Master_Frame;
-            //Master_Frame.join(YellowTaxi_dataFrame);
-            //Master_Frame.join(Greentaxi_dataframe);
-            //Master_Frame.join(tripsfhv_dataframe);
-            //Master_Frame.join(tripshvfhv_dataframe);
-            //Master_Frame.join(zonedata_dataframe);
+            Dataframe Master_Frame;
+            Master_Frame.join(YellowTaxi_dataFrame);
+            Master_Frame.join(Greentaxi_dataframe);
+            Master_Frame.join(tripsfhv_dataframe);
+            Master_Frame.join(tripshvfhv_dataframe);
+            Master_Frame.join(zonedata_dataframe);
             
-            //Dataframe Trips_Master;
-            //Trips_Master.join(tripsfhv_dataframe);
-            //Trips_Master.join(tripshvfhv_dataframe);
+            Dataframe Trips_Master;
+            Trips_Master.join(tripsfhv_dataframe);
+            Trips_Master.join(tripshvfhv_dataframe);
             
-            //Dataframe Taxi_Master;
-            //Taxi_Master.join(YellowTaxi_dataFrame);
-            //Taxi_Master.join(Greentaxi_dataframe);
+            Dataframe Taxi_Master;
+            Taxi_Master.join(YellowTaxi_dataFrame);
+            Taxi_Master.join(Greentaxi_dataframe);
             
 
 
