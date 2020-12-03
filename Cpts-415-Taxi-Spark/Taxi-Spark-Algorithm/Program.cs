@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
-
+using Algorithms;
 
 //Formatted/Semi-structured IO
 using System.Xml;
@@ -61,15 +61,18 @@ namespace Taxi_Spark_Algorithm
         static void Main(string[] args)
         {
             //Initialize Spark SQL session 
-            SparkSession spark = new SparkSession();
-            Dataframe dataFrame = spark.read().Csv(input);
+            SparkSession spark = SparkSession.Builder().AppName("").GetOrCreate();
 
 
             //Build Dataset
-                       
+            //Dataframe dataFrame = spark.read().Csv(input);
             
 
-            //Initial queries
+
+
+
+
+            //Initial queries to aquire necessary data
             int num_taxi_zones = 0;
 
 
@@ -79,7 +82,12 @@ namespace Taxi_Spark_Algorithm
             List<NeighborData> neighbors = new List<NeighborData>();
             for (int i = 0; i < num_taxi_zones; ++i)
             {
-               //Query for current taxi zone
+                //generate neighbor list for current taxizone
+
+
+
+
+                //query necessary data for neighbor list
 
 
 
@@ -87,9 +95,12 @@ namespace Taxi_Spark_Algorithm
                 //Compute Getis-Ord Statistic and add z-score to output list
                 computationData.taxiZoneData.Add(new TaxiZoneData() { zoneID = i, zscore = Getis_Ord_Stat(neighbors)});
                 neighbors.Clear();
+
+                //Console output to display computation 
+                Console.Write("\rProgress: {0}/{1} - {2:P}", i, num_taxi_zones, i/num_taxi_zones);
             }
 
-            //output data
+            //output data data as JSON file
             string jsonString;
             jsonString = JsonSerializer.Serialize(computationData, new JsonSerializerOptions() { WriteIndented = true});
             File.WriteAllText("output.Json", jsonString);
@@ -100,69 +111,69 @@ namespace Taxi_Spark_Algorithm
 
         //Initially created as serial algorithm 
         //TODO: Add parallelization
-        public static double Getis_Ord_Stat(List<NeighborData> neighbors)
-        {
-            double _sum1 = 0, _sum2 = 0, _sum3 = 0, _X = 0, _S = 0;
+        //public static double Getis_Ord_Stat(List<NeighborData> neighbors)
+        //{
+        //    double _sum1 = 0, _sum2 = 0, _sum3 = 0, _X = 0, _S = 0;
 
-            /*
-            //Serial Version
-            //compute sum 1
-            double _sum1 = Sum1(ref neighbors);
-
-
-            //compute sum 2
-            double _sum2 = Sum2(ref neighbors);
+        //    /*
+        //    //Serial Version
+        //    //compute sum 1
+        //    double _sum1 = Sum1(ref neighbors);
 
 
-            //compute sum 3
-            double _sum3 = Sum3(ref neighbors);
+        //    //compute sum 2
+        //    double _sum2 = Sum2(ref neighbors);
 
 
-            //compute X
-            double _X = X(ref neighbors);
+        //    //compute sum 3
+        //    double _sum3 = Sum3(ref neighbors);
 
 
-            //compute S
-            double _S = S(ref neighbors, _X);
-            */
-            //Parallel Version
-
-            //TaskFactory to launch tasks, list of tasks to for task management, uses default TaskScheduler
-            List<Task<double>> tasks = new List<Task<double>>();
-            TaskFactory<double> factory = new TaskFactory<double>();
-
-            //start tasks for Sum1, SUm2, Sum3, X
-            Task<double> T = factory.StartNew(()=>Sum1(ref neighbors));
-            tasks.Add(T);
-
-            T = factory.StartNew(() => Sum2(ref neighbors));
-            tasks.Add(T);
-
-            T = factory.StartNew(() => Sum3(ref neighbors));
-            tasks.Add(T);
-
-            T = factory.StartNew(() => X(ref neighbors));
-            tasks.Add(T);
-
-            //wait for all tasks to complete
-            Task.WaitAll();
-
-            //get results from tasks
-            _sum1 = tasks[0].Result;
-            _sum2 = tasks[1].Result;
-            _sum3 = tasks[2].Result;
-            _X = tasks[3].Result;
-
-            //compute S
-            _S = S(ref neighbors, _X);
-
-            //compute stat and return
-            double zscore = (_sum1 - (_X * _sum2)) / (_S * Math.Sqrt((neighbors.Count * _sum3 - _sum2) / (neighbors.Count-1)));
-            return zscore;
+        //    //compute X
+        //    double _X = X(ref neighbors);
 
 
+        //    //compute S
+        //    double _S = S(ref neighbors, _X);
+        //    */
+        //    //Parallel Version
 
-        }
+        //    //TaskFactory to launch tasks, list of tasks to for task management, uses default TaskScheduler
+        //    List<Task<double>> tasks = new List<Task<double>>();
+        //    TaskFactory<double> factory = new TaskFactory<double>();
+
+        //    //start tasks for Sum1, SUm2, Sum3, X
+        //    Task<double> T = factory.StartNew(()=>Sum1(ref neighbors));
+        //    tasks.Add(T);
+
+        //    T = factory.StartNew(() => Sum2(ref neighbors));
+        //    tasks.Add(T);
+
+        //    T = factory.StartNew(() => Sum3(ref neighbors));
+        //    tasks.Add(T);
+
+        //    T = factory.StartNew(() => X(ref neighbors));
+        //    tasks.Add(T);
+
+        //    //wait for all tasks to complete
+        //    Task.WaitAll();
+
+        //    //get results from tasks
+        //    _sum1 = tasks[0].Result;
+        //    _sum2 = tasks[1].Result;
+        //    _sum3 = tasks[2].Result;
+        //    _X = tasks[3].Result;
+
+        //    //compute S
+        //    _S = S(ref neighbors, _X);
+
+        //    //compute stat and return
+        //    double zscore = (_sum1 - (_X * _sum2)) / (_S * Math.Sqrt((neighbors.Count * _sum3 - _sum2) / (neighbors.Count-1)));
+        //    return zscore;
+
+
+
+        //}
         public static bool IsNeighbor(double radius, double x1, double y1, double x2, double y2)
         {
             x1 = Math.Pow((x1 - x2),2);
@@ -173,65 +184,65 @@ namespace Taxi_Spark_Algorithm
             return false;
         }//NeighborData and TaxiZonedata could be used to provide coordinates. A radius should be some constant in main or global
 
-        private static double Sum1(ref List<NeighborData> neighbors)
-        {
-            double sum = 0;
+        //private static double Sum1(ref List<NeighborData> neighbors)
+        //{
+        //    double sum = 0;
 
-            foreach (NeighborData data in neighbors)
-            {
-                sum += data.distance * data.attribute;
-            }
+        //    foreach (NeighborData data in neighbors)
+        //    {
+        //        sum += data.distance * data.attribute;
+        //    }
 
-            return sum;
-        }
+        //    return sum;
+        //}
 
-        private static double Sum2(ref List<NeighborData> neighbors)
-        {
-            double sum = 0;
+        //private static double Sum2(ref List<NeighborData> neighbors)
+        //{
+        //    double sum = 0;
 
-            foreach (NeighborData data in neighbors)
-            {
-                sum += data.distance;
-            }
+        //    foreach (NeighborData data in neighbors)
+        //    {
+        //        sum += data.distance;
+        //    }
 
-            return sum;
-        }
+        //    return sum;
+        //}
 
-        private static double Sum3(ref List<NeighborData> neighbors)
-        {
-            double sum = 0;
+        //private static double Sum3(ref List<NeighborData> neighbors)
+        //{
+        //    double sum = 0;
 
-            foreach (NeighborData data in neighbors)
-            {
-                sum += (data.distance * data.distance);
-            }
+        //    foreach (NeighborData data in neighbors)
+        //    {
+        //        sum += (data.distance * data.distance);
+        //    }
 
-            return sum;
-        }
+        //    return sum;
+        //}
 
-        private static double X(ref List<NeighborData> neighbors)
-        {
-            double sum = 0;
+        //private static double X(ref List<NeighborData> neighbors)
+        //{
+        //    double sum = 0;
 
-            foreach (NeighborData data in neighbors)
-            {
-                sum += data.attribute;
-            }
+        //    foreach (NeighborData data in neighbors)
+        //    {
+        //        sum += data.attribute;
+        //    }
 
-            return sum / neighbors.Count;
-        }
+        //    return sum / neighbors.Count;
+        //}
 
-        private static double S(ref List<NeighborData> neighbors, double X)
-        {
-            double sum = 0;
+        //private static double S(ref List<NeighborData> neighbors, double X)
+        //{
+        //    double sum = 0;
 
-            foreach (NeighborData data in neighbors)
-            {
-                sum += (data.attribute * data.attribute);
-            }
+        //    foreach (NeighborData data in neighbors)
+        //    {
+        //        sum += (data.attribute * data.attribute);
+        //    }
 
-            return Math.Sqrt((sum/neighbors.Count) - Math.Pow(X, 2));
-        }
+        //    return Math.Sqrt((sum/neighbors.Count) - Math.Pow(X, 2));
+        //}
 
         /*
         private static void BuildNeighborTable(int num_zones, double radius, SparkContext C){//We require a table detailing a neighboring regions in the DB.
