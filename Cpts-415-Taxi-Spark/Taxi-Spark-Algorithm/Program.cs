@@ -71,6 +71,21 @@ namespace Taxi_Spark_Algorithm
             //Dataframe Tripstwo_dataFrame = spark.read().Csv(input4);
             //Dataframe Zonedata_dataFrame = spark.read().Csv(input5);
             
+            //Dataframe Master_Frame;
+            //Master_Frame.join(YellowTaxi_dataFrame);
+            //Master_Frame.join(Greentaxi_dataframe);
+            //Master_Frame.join(tripsone_dataframe);
+            //Master_Frame.join(tripstwo_dataframe);
+            //Master_Frame.join(zonedata_dataframe);
+            
+            //Dataframe Trips_Master;
+            //Trips_Master.join(tripsone_dataframe);
+            //Trips_Master.join(tripstwo_dataframe);
+            
+            //Dataframe Taxi_Master;
+            //Taxi_Master.join(YellowTaxi_dataFrame);
+            //Taxi_Master.join(Greentaxi_dataframe);
+            
 
 
 
