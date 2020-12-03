@@ -65,26 +65,79 @@ namespace Taxi_Spark_Algorithm
 
 
             //Build Dataset
-            Dataframe YellowTaxi_dataFrame = spark.read().Csv("yellow_tripdata_2020-01.csv");
-            Dataframe Greentaxi_dataFrame = spark.read().Csv("green_tripdata_2020-01.csv");
-            Dataframe Tripsfhv_dataFrame = spark.read().Csv("fhv_tripdata_2020-01.csv");
-            Dataframe Tripsfhvhv_dataFrame = spark.read().Csv("fhvhv_tripdata_2020-01.csv");
-            //Dataframe Zonedata_dataFrame = spark.read().Csv("zones_data.csv"); I don't know the file name - Will
+            DataFrame YellowTaxi_dataFrame = spark.read().Csv("yellow_tripdata_2020-01test.csv");
+            DataFrame GreenTaxi_dataFrame = spark.read().Csv("green_tripdata_2020-01test.csv");
+            DataFrame Tripsfhv_dataFrame = spark.read().Csv("fhv_tripdata_2020-01test.csv");
+            DataFrame Tripsfhvhv_dataFrame = spark.read().Csv("fhvhv_tripdata_2020-01test.csv");
+            Dataframe Zonedata_dataFrame = spark.read().Csv("zones_data-01test.csv");
             
-            Dataframe Master_Frame;
-            Master_Frame.join(YellowTaxi_dataFrame);
-            Master_Frame.join(Greentaxi_dataframe);
-            Master_Frame.join(tripsfhv_dataframe);
-            Master_Frame.join(tripshvfhv_dataframe);
-            Master_Frame.join(zonedata_dataframe);
+            //Unioned the above dataframes with temporary ones containing the rest of the data
             
-            Dataframe Trips_Master;
-            Trips_Master.join(tripsfhv_dataframe);
-            Trips_Master.join(tripshvfhv_dataframe);
+            DataFrame temp = new DataFrame;
+            temp = spark.read().Csv("yellow_tripdata_2020-02test.csv");
+            YellowTaxi_dataFrame.union(temp);
+            temp = spark.read().Csv("yellow_tripdata_2020-03test.csv");
+            YellowTaxi_dataFrame.union(temp);
+            temp = spark.read().Csv("yellow_tripdata_2020-04test.csv");
+            YellowTaxi_dataFrame.union(temp);
+            temp = spark.read().Csv("yellow_tripdata_2020-05test.csv");
+            YellowTaxi_dataFrame.union(temp);
+            temp = spark.read().Csv("yellow_tripdata_2020-06test.csv");
+            YellowTaxi_dataFrame.union(temp);
             
-            Dataframe Taxi_Master;
-            Taxi_Master.join(YellowTaxi_dataFrame);
-            Taxi_Master.join(Greentaxi_dataframe);
+            temp = spark.read().Csv("green_tripdata_2020-02test.csv");
+            GreenTaxi_dataFrame.union(temp);
+            temp = spark.read().Csv("green_tripdata_2020-03test.csv");
+            GreenTaxi_dataFrame.union(temp);
+            temp = spark.read().Csv("green_tripdata_2020-04test.csv");
+            GreenTaxi_dataFrame.union(temp);
+            temp = spark.read().Csv("green_tripdata_2020-05test.csv");
+            GreenTaxi_dataFrame.union(temp);
+            temp = spark.read().Csv("green_tripdata_2020-06test.csv");
+            GreenTaxi_dataFrame.union(temp);
+            
+            temp = spark.read().Csv("fhv_tripdata_2020-02test.csv");
+            Tripsfhv_dataFrame.union(temp);
+            temp = spark.read().Csv("fhv_tripdata_2020-03test.csv");
+            Tripsfhv_dataFrame.union(temp);
+            temp = spark.read().Csv("fhv_tripdata_2020-04test.csv");
+            Tripsfhv_dataFrame.union(temp);
+            temp = spark.read().Csv("fhv_tripdata_2020-05test.csv");
+            Tripsfhv_dataFrame.union(temp);
+            temp = spark.read().Csv("fhv_tripdata_2020-06test.csv");
+            Tripsfhv_dataFrame.union(temp);
+            
+            temp = spark.read().Csv("fhvhv_tripdata_2020-02test.csv");
+            Tripsfhvhv_dataFrame.union(temp);
+            temp = spark.read().Csv("fhvhv_tripdata_2020-03test.csv");
+            Tripsfhvhv_dataFrame.union(temp);
+            temp = spark.read().Csv("fhvhv_tripdata_2020-04test.csv");
+            Tripsfhvhv_dataFrame.union(temp);
+            temp = spark.read().Csv("fhvhv_tripdata_2020-05test.csv");
+            Tripsfhvhv_dataFrame.union(temp);
+            temp = spark.read().Csv("fhvhv_tripdata_2020-06test.csv");
+            Tripsfhvhv_dataFrame.union(temp);
+            
+            temp = spark.read().Csv("zones_data-02test.csv");
+            Zonedata_dataFrame.union(temp);
+            temp = spark.read().Csv("zones_data-03test.csv");
+            Zonedata_dataFrame.union(temp);
+            temp = spark.read().Csv("zones_data-04test.csv");
+            Zonedata_dataFrame.union(temp);
+            temp = spark.read().Csv("zones_data-05test.csv");
+            Zonedata_dataFrame.union(temp);
+            temp = spark.read().Csv("zones_data-06test.csv");
+            Zonedata_dataFrame.union(temp);
+            
+            //Dataframes contain the data from the months of January - July.
+            
+            //Test Lines
+            Head(YellowTaxi_dataFrame);
+            Head(GreenTaxi_dataFrame);
+            Head(Tripsfhv_dataFrame);
+            Head(Tripsfhvhv_dataFrame);
+            Head(Zonedata_dataFrame);
+            
             
 
 
