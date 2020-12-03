@@ -65,7 +65,10 @@ namespace Taxi_Spark_Algorithm
 
 
             //Build Dataset
-            //Dataframe dataFrame = spark.read().Csv(input);
+            //Dataframe YellowTaxi_dataFrame = spark.read().Csv(input);
+            //Dataframe Greentaxi_dataFrame = spark.read().Csv(input2);
+            //Dataframe Tripsone_dataFrame = spark.read().Csv(input3);
+            //Dataframe Tripstwo_dataFrame = spark.read().Csv(input4);
             
 
 
