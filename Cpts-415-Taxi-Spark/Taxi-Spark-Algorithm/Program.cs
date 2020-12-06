@@ -283,7 +283,7 @@ namespace Taxi_Spark_Algorithm
         ///// <returns>num taxi zones</returns>
         //public static int getNumTaxiZones(ref DataFrame Taxi_Zones)
         //{
-
+            //Taxi_Zones.Count();
         //}
 
 
@@ -295,7 +295,7 @@ namespace Taxi_Spark_Algorithm
         ///// <returns></returns>
         //public static List<NeighborData> GetNeighbors(ref DataFrame Taxi_Zones, int currentZoneID)
         //{
-
+            
         //}
 
         ///// <summary>
@@ -306,7 +306,7 @@ namespace Taxi_Spark_Algorithm
         ///// <returns></returns>
         //public static int getNumYellowTrips(ref DataFrame Yellow_Tripdata, int currentZoneID)
         //{
-
+            //Yellow_Tripdata.Filter("PULocationID = 'currentZoneID' OR DOLocationID = 'currentZoneID'").Count();
         //}
 
         ///// <summary>
@@ -317,7 +317,7 @@ namespace Taxi_Spark_Algorithm
         ///// <returns></returns>
         //public static int getNumGreenTrips(ref DataFrame Green_Tripdata, int currentZoneID)
         //{
-
+            //Green_Tripdata.Filter("PULocationID = 'currentZoneID' OR DOLocationID = 'currentZoneID'").Count();
         //}
 
         ///// <summary>
@@ -328,7 +328,7 @@ namespace Taxi_Spark_Algorithm
         ///// <returns></returns>
         //public static int getNumFHVTrips(ref DataFrame FHV_Tripdata, int currentZoneID)
         //{
-
+            //FHV_Tripdata.Filter("PULocationID = 'currentZoneID' OR DOLocationID = 'currentZoneID'").Count();
         //}
 
         ///// <summary>
@@ -339,7 +339,7 @@ namespace Taxi_Spark_Algorithm
         ///// <returns></returns>
         //public static int getNumHVFHVTrips(ref DataFrame HVFHV_Tripdata, int currentZoneID)
         //{
-
+            //HVFHV_Tripdata.Filter("PULocationID = 'currentZoneID' OR DOLocationID = 'currentZoneID'").Count();
         //}
 
     }
