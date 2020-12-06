@@ -65,82 +65,77 @@ namespace Taxi_Spark_Algorithm
 
 
             //Build Dataset
-            DataFrame YellowTaxi_dataFrame = spark.read().Csv("yellow_tripdata_2020-01test.csv");
-            DataFrame GreenTaxi_dataFrame = spark.read().Csv("green_tripdata_2020-01test.csv");
-            DataFrame Tripsfhv_dataFrame = spark.read().Csv("fhv_tripdata_2020-01test.csv");
-            DataFrame Tripsfhvhv_dataFrame = spark.read().Csv("fhvhv_tripdata_2020-01test.csv");
-            DataFrame Zonedata_dataFrame = spark.read().Csv("zones_data-01test.csv");
-            
+            DataFrame YellowTaxi_dataFrame = spark.Read().Csv("yellow_tripdata_2020-01test.csv");
+            DataFrame GreenTaxi_dataFrame = spark.Read().Csv("green_tripdata_2020-01test.csv");
+            DataFrame Fhv_dataFrame = spark.Read().Csv("fhv_tripdata_2020-01test.csv");
+            DataFrame Hvfhv_dataFrame = spark.Read().Csv("fhvhv_tripdata_2020-01test.csv");
+            DataFrame Zonedata_dataFrame = spark.Read().Csv("zones_data-01test.csv");
+
             //Unioned the above dataframes with temporary ones containing the rest of the data
+
+            DataFrame temp = spark.Read().Csv("yellow_tripdata_2020-02test.csv");
+            YellowTaxi_dataFrame.Union(temp);
+            temp = spark.Read().Csv("yellow_tripdata_2020-03test.csv");
+            YellowTaxi_dataFrame.Union(temp);
+            temp = spark.Read().Csv("yellow_tripdata_2020-04test.csv");
+            YellowTaxi_dataFrame.Union(temp);
+            temp = spark.Read().Csv("yellow_tripdata_2020-05test.csv");
+            YellowTaxi_dataFrame.Union(temp);
+            temp = spark.Read().Csv("yellow_tripdata_2020-06test.csv");
+            YellowTaxi_dataFrame.Union(temp);
             
-            DataFrame temp = new DataFrame();
-            temp = spark.read().Csv("yellow_tripdata_2020-02test.csv");
-            YellowTaxi_dataFrame.union(temp);
-            temp = spark.read().Csv("yellow_tripdata_2020-03test.csv");
-            YellowTaxi_dataFrame.union(temp);
-            temp = spark.read().Csv("yellow_tripdata_2020-04test.csv");
-            YellowTaxi_dataFrame.union(temp);
-            temp = spark.read().Csv("yellow_tripdata_2020-05test.csv");
-            YellowTaxi_dataFrame.union(temp);
-            temp = spark.read().Csv("yellow_tripdata_2020-06test.csv");
-            YellowTaxi_dataFrame.union(temp);
+            temp = spark.Read().Csv("green_tripdata_2020-02test.csv");
+            GreenTaxi_dataFrame.Union(temp);
+            temp = spark.Read().Csv("green_tripdata_2020-03test.csv");
+            GreenTaxi_dataFrame.Union(temp);
+            temp = spark.Read().Csv("green_tripdata_2020-04test.csv");
+            GreenTaxi_dataFrame.Union(temp);
+            temp = spark.Read().Csv("green_tripdata_2020-05test.csv");
+            GreenTaxi_dataFrame.Union(temp);
+            temp = spark.Read().Csv("green_tripdata_2020-06test.csv");
+            GreenTaxi_dataFrame.Union(temp);
             
-            temp = spark.read().Csv("green_tripdata_2020-02test.csv");
-            GreenTaxi_dataFrame.union(temp);
-            temp = spark.read().Csv("green_tripdata_2020-03test.csv");
-            GreenTaxi_dataFrame.union(temp);
-            temp = spark.read().Csv("green_tripdata_2020-04test.csv");
-            GreenTaxi_dataFrame.union(temp);
-            temp = spark.read().Csv("green_tripdata_2020-05test.csv");
-            GreenTaxi_dataFrame.union(temp);
-            temp = spark.read().Csv("green_tripdata_2020-06test.csv");
-            GreenTaxi_dataFrame.union(temp);
+            temp = spark.Read().Csv("fhv_tripdata_2020-02test.csv");
+            Fhv_dataFrame.Union(temp);
+            temp = spark.Read().Csv("fhv_tripdata_2020-03test.csv");
+            Fhv_dataFrame.Union(temp);
+            temp = spark.Read().Csv("fhv_tripdata_2020-04test.csv");
+            Fhv_dataFrame.Union(temp);
+            temp = spark.Read().Csv("fhv_tripdata_2020-05test.csv");
+            Fhv_dataFrame.Union(temp);
+            temp = spark.Read().Csv("fhv_tripdata_2020-06test.csv");
+            Fhv_dataFrame.Union(temp);
             
-            temp = spark.read().Csv("fhv_tripdata_2020-02test.csv");
-            Tripsfhv_dataFrame.union(temp);
-            temp = spark.read().Csv("fhv_tripdata_2020-03test.csv");
-            Tripsfhv_dataFrame.union(temp);
-            temp = spark.read().Csv("fhv_tripdata_2020-04test.csv");
-            Tripsfhv_dataFrame.union(temp);
-            temp = spark.read().Csv("fhv_tripdata_2020-05test.csv");
-            Tripsfhv_dataFrame.union(temp);
-            temp = spark.read().Csv("fhv_tripdata_2020-06test.csv");
-            Tripsfhv_dataFrame.union(temp);
+            temp = spark.Read().Csv("fhvhv_tripdata_2020-02test.csv");
+            Hvfhv_dataFrame.Union(temp);
+            temp = spark.Read().Csv("fhvhv_tripdata_2020-03test.csv");
+            Hvfhv_dataFrame.Union(temp);
+            temp = spark.Read().Csv("fhvhv_tripdata_2020-04test.csv");
+            Hvfhv_dataFrame.Union(temp);
+            temp = spark.Read().Csv("fhvhv_tripdata_2020-05test.csv");
+            Hvfhv_dataFrame.Union(temp);
+            temp = spark.Read().Csv("fhvhv_tripdata_2020-06test.csv");
+            Hvfhv_dataFrame.Union(temp);
             
-            temp = spark.read().Csv("fhvhv_tripdata_2020-02test.csv");
-            Tripsfhvhv_dataFrame.union(temp);
-            temp = spark.read().Csv("fhvhv_tripdata_2020-03test.csv");
-            Tripsfhvhv_dataFrame.union(temp);
-            temp = spark.read().Csv("fhvhv_tripdata_2020-04test.csv");
-            Tripsfhvhv_dataFrame.union(temp);
-            temp = spark.read().Csv("fhvhv_tripdata_2020-05test.csv");
-            Tripsfhvhv_dataFrame.union(temp);
-            temp = spark.read().Csv("fhvhv_tripdata_2020-06test.csv");
-            Tripsfhvhv_dataFrame.union(temp);
-            
-            temp = spark.read().Csv("zones_data-02test.csv");
-            Zonedata_dataFrame.union(temp);
-            temp = spark.read().Csv("zones_data-03test.csv");
-            Zonedata_dataFrame.union(temp);
-            temp = spark.read().Csv("zones_data-04test.csv");
-            Zonedata_dataFrame.union(temp);
-            temp = spark.read().Csv("zones_data-05test.csv");
-            Zonedata_dataFrame.union(temp);
-            temp = spark.read().Csv("zones_data-06test.csv");
-            Zonedata_dataFrame.union(temp);
-            
+            temp = spark.Read().Csv("zones_data-02test.csv");
+            Zonedata_dataFrame.Union(temp);
+            temp = spark.Read().Csv("zones_data-03test.csv");
+            Zonedata_dataFrame.Union(temp);
+            temp = spark.Read().Csv("zones_data-04test.csv");
+            Zonedata_dataFrame.Union(temp);
+            temp = spark.Read().Csv("zones_data-05test.csv");
+            Zonedata_dataFrame.Union(temp);
+            temp = spark.Read().Csv("zones_data-06test.csv");
+            Zonedata_dataFrame.Union(temp);
+
             //Dataframes contain the data from the months of January - July.
-            
+
             //Test Lines
-            Head(YellowTaxi_dataFrame);
-            Head(GreenTaxi_dataFrame);
-            Head(Tripsfhv_dataFrame);
-            Head(Tripsfhvhv_dataFrame);
-            Head(Zonedata_dataFrame);
-            
-            
-
-
+            GreenTaxi_dataFrame.Show();
+            YellowTaxi_dataFrame.Show();
+            Fhv_dataFrame.Show();
+            Hvfhv_dataFrame.Show();
+            Zonedata_dataFrame.Show();
 
 
 
@@ -256,65 +251,7 @@ namespace Taxi_Spark_Algorithm
             return false;
         }//NeighborData and TaxiZonedata could be used to provide coordinates. A radius should be some constant in main or global
 
-        //private static double Sum1(ref List<NeighborData> neighbors)
-        //{
-        //    double sum = 0;
-
-        //    foreach (NeighborData data in neighbors)
-        //    {
-        //        sum += data.distance * data.attribute;
-        //    }
-
-        //    return sum;
-        //}
-
-        //private static double Sum2(ref List<NeighborData> neighbors)
-        //{
-        //    double sum = 0;
-
-        //    foreach (NeighborData data in neighbors)
-        //    {
-        //        sum += data.distance;
-        //    }
-
-        //    return sum;
-        //}
-
-        //private static double Sum3(ref List<NeighborData> neighbors)
-        //{
-        //    double sum = 0;
-
-        //    foreach (NeighborData data in neighbors)
-        //    {
-        //        sum += (data.distance * data.distance);
-        //    }
-
-        //    return sum;
-        //}
-
-        //private static double X(ref List<NeighborData> neighbors)
-        //{
-        //    double sum = 0;
-
-        //    foreach (NeighborData data in neighbors)
-        //    {
-        //        sum += data.attribute;
-        //    }
-
-        //    return sum / neighbors.Count;
-        //}
-
-        //private static double S(ref List<NeighborData> neighbors, double X)
-        //{
-        //    double sum = 0;
-
-        //    foreach (NeighborData data in neighbors)
-        //    {
-        //        sum += (data.attribute * data.attribute);
-        //    }
-
-        //    return Math.Sqrt((sum/neighbors.Count) - Math.Pow(X, 2));
-        //}
+        
 
         /*
         private static void BuildNeighborTable(int num_zones, double radius, SparkContext C,DataFrame Zonedata_dataFrame){//We require a table detailing a neighboring regions in the DB.
@@ -451,15 +388,7 @@ GROUP BY zoneID, cal_date
 //We need to split the time values apart with the calendar date and daily clock time separated if we want to do something like this.
 */
 //Dataframe union and dataframe select are key
-<<<<<<< Updated upstream
-=======
 
-//Plan of attack - Kendrick Mitchell
-//1. Read files locally in relation to the machine running the DB. Parsing will be important to do early on. 
-//2. Either aggregate all files together or preprocess them all together to have equal schemas for future dataframe operations. Ex. Make yellow_taxi_id = green_taxi_id = vehicleforhire_id
-//3. Apply the above aggregate function to begin running iterations of the G* algorithm.  
-//Iterations of the G* are determined by maximum and minimum dates for the data. Start in the farthest past then proceed month by month/day/year.
->>>>>>> Stashed changes
 
 
 
