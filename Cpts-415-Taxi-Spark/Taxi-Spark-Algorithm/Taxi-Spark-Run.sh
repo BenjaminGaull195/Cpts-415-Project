@@ -12,11 +12,11 @@ cd bin/Debug/net5.0/
 
 #Wait for user input to progres to execution
 echo "\nPress Enter to continue"
-read -n 1 -s
-echo "\n"
+read -s
+
 
 ~/bin/spark-3.0.1-bin-hadoop2.7/bin/spark-submit \
 --class org.apache.spark.deploy.dotnet.DotnetRunner \
 --master local \
 microsoft-spark-3-0_2.12-1.0.0.jar \
-dotnet mySparkApp2.dll 
+dotnet Taxi-Spark-Algorithm.dll 
