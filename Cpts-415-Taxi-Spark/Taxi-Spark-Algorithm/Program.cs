@@ -317,20 +317,20 @@ namespace Taxi_Spark_Algorithm
         //}
 
         /*
-        private static void BuildNeighborTable(int num_zones, double radius, SparkContext C){//We require a table detailing a neighboring regions in the DB.
-            DataFrame df; //The dataframe holding the taxizone lookup table 
+        private static void BuildNeighborTable(int num_zones, double radius, SparkContext C,DataFrame Zonedata_dataFrame){//We require a table detailing a neighboring regions in the DB.
+           
             DataFrame df2; //The table being accumulated with neighbor relations.
             DataFrame df3; //Intermediary dataframe
             DataFrame df4; //Intermediary dataframe
             //Iteratively pull the coordinates from the taxi zone table. It only has num_zones items which should be 256 
             for(int i = 0; i <= num_zones; ++i)
                 {
-                    df3 = df.Filter(df("ZoneID") == i).Show(0);
+                    df3 = Zonedata_dataFrame.Filter(Zonedata_dataFrame("ZoneID") == i).Show(0); 
                     for(int j = 0; j <= num_zones; ++j)
                     {
-                        df4 = df.Filter(df("ZoneID") == i).Show(0);
+                        df4 = Zonedata_dataFrame.Filter(Zonedata_dataFrame("ZoneID") == j).Show(0);
 
-                        if(IsNeighbor(radius,,,,) && i != j){//Need help extracting values from the coordinates from df3 and df4.
+                        if(IsNeighbor(radius,df3.head().getDouble(1),df3.head().getDouble(2),df4.head().getDouble(1),df4.head().getDouble(2)) && i != j){//Need help extracting values from the coordinates from df3 and df4.
                             df4 = C.(
                             (i, j)
                             ).toDF("Current_ID", "Neighbor_ID");//The zone ids within df3 and df4
