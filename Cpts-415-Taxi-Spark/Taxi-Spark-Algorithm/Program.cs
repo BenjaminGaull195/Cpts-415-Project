@@ -69,11 +69,11 @@ namespace Taxi_Spark_Algorithm
             DataFrame GreenTaxi_dataFrame = spark.read().Csv("green_tripdata_2020-01test.csv");
             DataFrame Tripsfhv_dataFrame = spark.read().Csv("fhv_tripdata_2020-01test.csv");
             DataFrame Tripsfhvhv_dataFrame = spark.read().Csv("fhvhv_tripdata_2020-01test.csv");
-            Dataframe Zonedata_dataFrame = spark.read().Csv("zones_data-01test.csv");
+            DataFrame Zonedata_dataFrame = spark.read().Csv("zones_data-01test.csv");
             
             //Unioned the above dataframes with temporary ones containing the rest of the data
             
-            DataFrame temp = new DataFrame;
+            DataFrame temp = new DataFrame();
             temp = spark.read().Csv("yellow_tripdata_2020-02test.csv");
             YellowTaxi_dataFrame.union(temp);
             temp = spark.read().Csv("yellow_tripdata_2020-03test.csv");
@@ -343,10 +343,81 @@ namespace Taxi_Spark_Algorithm
         */
 
 
+        //Queries:
+
+        /// <summary>
+        /// Used to get the total number of taxizones
+        /// </summary>
+        /// <param name="Taxi_Zones">pass by ref variable refering to taxi zone dataframe</param>
+        /// <returns>num taxi zones</returns>
+        public static int getNumTaxiZones(ref DataFrame Taxi_Zones)
+        {
+
+        }
+
+
+        /// <summary>
+        /// Returns a list of neighbors for the current taxi zone
+        /// </summary>
+        /// <param name="Taxi_Zones">pass by ref variable refering to taxi zone dataframe</param>
+        /// <param name="currentZoneID">ID for the current taxi zone</param>
+        /// <returns></returns>
+        public static List<NeighborData> GetNeighbors(ref DataFrame Taxi_Zones, int currentZoneID)
+        {
+
+        }
+
+        /// <summary>
+        /// Returns the total number of yellow taxi trips that have a pickup/dropoff that match the currentZoneID
+        /// </summary>
+        /// <param name="Yellow_Tripdata">pass by ref variable refering to yellow_tripdata dataframe</param>
+        /// <param name="currentZoneID">ID for the current taxi zone</param>
+        /// <returns></returns>
+        public static int getNumYellowTrips(ref DataFrame Yellow_Tripdata, int currentZoneID)
+        {
+
+        }
+
+        /// <summary>
+        /// Returns the total number of green taxi trips that have a pickup/dropoff that match the currentZoneID
+        /// </summary>
+        /// <param name="Green_Tripdata">pass by ref variable refering to green_tripdata dataframe</param>
+        /// <param name="currentZoneID">ID for the current taxi zone</param>
+        /// <returns></returns>
+        public static int getNumGreenTrips(ref DataFrame Green_Tripdata, int currentZoneID)
+        {
+
+        }
+
+        /// <summary>
+        /// Returns the total number of fhv trips that have a pickup/dropoff that match the currentZoneID
+        /// </summary>
+        /// <param name="FHV_Tripdata">pass by ref variable refering to fhv_tripdata dataframe</param>
+        /// <param name="currentZoneID">ID for the current taxi zone</param>
+        /// <returns></returns>
+        public static int getNumFHVTrips(ref DataFrame FHV_Tripdata, int currentZoneID)
+        {
+
+        }
+
+        /// <summary>
+        /// Returns the total number of hvfhv trips that have a pickup/dropoff that match the currentZoneID
+        /// </summary>
+        /// <param name="HVFHV_Tripdata">pass by ref variable refering to hvfhv_tripdata dataframe</param>
+        /// <param name="currentZoneID">ID for the current taxi zone</param>
+        /// <returns></returns>
+        public static int getNumHVFHVTrips(ref DataFrame HVFHV_Tripdata, int currentZoneID)
+        {
+
+        }
+
     }
 
 
-    
+
+
+
+
 
 }
 
@@ -389,3 +460,13 @@ GROUP BY zoneID, cal_date
 //3. Apply the above aggregate function to begin running iterations of the G* algorithm.  
 //Iterations of the G* are determined by maximum and minimum dates for the data. Start in the farthest past then proceed month by month/day/year.
 >>>>>>> Stashed changes
+
+
+
+
+
+
+
+
+
+
