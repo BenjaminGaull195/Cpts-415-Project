@@ -24,13 +24,13 @@ namespace Taxi_Spark_Linux
             //Initialize Spark SQL session 
             SparkSession spark = SparkSession.Builder().AppName("Taxi-Spark").GetOrCreate();
 
-
+            string datapath = "/home/ubuntu/Cpts-415-Taxi-Spark-Data/TEST/";
             //Build Dataset
-            DataFrame YellowTaxi_dataFrame = spark.Read().Option("header", true).Csv("yellow_tripdata_2020-01test.csv");
-            DataFrame GreenTaxi_dataFrame = spark.Read().Option("header", true).Csv("green_tripdata_2020-01test.csv");
-            DataFrame Fhv_dataFrame = spark.Read().Option("header", true).Csv("fhv_tripdata_2020-01test.csv");
-            DataFrame Hvfhv_dataFrame = spark.Read().Option("header", true).Csv("fhvhv_tripdata_2020-01test.csv");
-            DataFrame Zonedata_dataFrame = spark.Read().Option("header", true).Csv("zones_data.csv");
+            DataFrame YellowTaxi_dataFrame = spark.Read().Option("header", true).Csv(datapath + "yellow_tripdata_2020-01test.csv");
+            DataFrame GreenTaxi_dataFrame = spark.Read().Option("header", true).Csv(datapath + "green_tripdata_2020-01test.csv");
+            DataFrame Fhv_dataFrame = spark.Read().Option("header", true).Csv(datapath + "fhv_tripdata_2020-01test.csv");
+            DataFrame Hvfhv_dataFrame = spark.Read().Option("header", true).Csv(datapath + "fhvhv_tripdata_2020-01test.csv");
+            DataFrame Zonedata_dataFrame = spark.Read().Option("header", true).Csv(datapath + "zones_data.csv");
 
             //Unioned the above dataframes with temporary ones containing the rest of the data
 
