@@ -24,67 +24,18 @@ namespace Taxi_Spark_Linux
             //Initialize Spark SQL session 
             SparkSession spark = SparkSession.Builder().AppName("Taxi-Spark").GetOrCreate();
 
-            string datapath = "";
-            //Build Dataset
-            DataFrame YellowTaxi_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/TEST/yellow/");
-            DataFrame GreenTaxi_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/TEST/green/");
-            DataFrame Fhv_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/TEST/fhv/");
-            DataFrame Hvfhv_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/TEST/fhvhv/");
-            DataFrame Zonedata_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/TEST/taxi_zonesXY_test.csv");
+
+            //Build Dataset; TODO: Test reading multiple files from directory
+            //Dataframes contain the data from the months of January - July.
+            DataFrame YellowTaxi_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/yellow/");
+            DataFrame GreenTaxi_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/green/");
+            DataFrame Fhv_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/fhv/");
+            DataFrame Hvfhv_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/fhvhv/");
+            DataFrame Zonedata_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/taxi_zonesXY.csv");
 
             //Unioned the above dataframes with temporary ones containing the rest of the data
 
-            //DataFrame temp = spark.Read().Csv("yellow_tripdata_2020-02test.csv");
-            //YellowTaxi_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("yellow_tripdata_2020-03test.csv");
-            //YellowTaxi_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("yellow_tripdata_2020-04test.csv");
-            //YellowTaxi_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("yellow_tripdata_2020-05test.csv");
-            //YellowTaxi_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("yellow_tripdata_2020-06test.csv");
-            //YellowTaxi_dataFrame.Union(temp);
-
-            //temp = spark.Read().Csv("green_tripdata_2020-02test.csv");
-            //GreenTaxi_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("green_tripdata_2020-03test.csv");
-            //GreenTaxi_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("green_tripdata_2020-04test.csv");
-            //GreenTaxi_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("green_tripdata_2020-05test.csv");
-            //GreenTaxi_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("green_tripdata_2020-06test.csv");
-            //GreenTaxi_dataFrame.Union(temp);
-
-            //temp = spark.Read().Csv("fhv_tripdata_2020-02test.csv");
-            //Fhv_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("fhv_tripdata_2020-03test.csv");
-            //Fhv_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("fhv_tripdata_2020-04test.csv");
-            //Fhv_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("fhv_tripdata_2020-05test.csv");
-            //Fhv_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("fhv_tripdata_2020-06test.csv");
-            //Fhv_dataFrame.Union(temp);
-
-            //temp = spark.Read().Csv("fhvhv_tripdata_2020-02test.csv");
-            //Hvfhv_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("fhvhv_tripdata_2020-03test.csv");
-            //Hvfhv_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("fhvhv_tripdata_2020-04test.csv");
-            //Hvfhv_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("fhvhv_tripdata_2020-05test.csv");
-            //Hvfhv_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("fhvhv_tripdata_2020-06test.csv");
-            //Hvfhv_dataFrame.Union(temp);
-
-
-            //Dataframes contain the data from the months of January - July.
-
-
-
-
-
+            
             //Test Lines
             Console.WriteLine("Debug:: Dataframe Schems:");
             GreenTaxi_dataFrame.PrintSchema();
@@ -100,6 +51,82 @@ namespace Taxi_Spark_Linux
             Hvfhv_dataFrame.Show();
             Zonedata_dataFrame.Show();
 
+
+
+            //Initial queries to aquire necessary data
+            long num_taxi_zones = getNumTaxiZones(ref Zonedata_dataFrame);
         }
+
+        //Queries:
+
+        /// <summary>
+        /// Used to get the total number of taxizones
+        /// </summary>
+        /// <param name="Taxi_Zones">pass by ref variable refering to taxi zone dataframe</param>
+        /// <returns>num taxi zones</returns>
+        public static long getNumTaxiZones(ref DataFrame Taxi_Zones)
+        {
+            return Taxi_Zones.Count();
+        }
+
+
+        ///// <summary>
+        ///// Returns a list of neighbors for the current taxi zone
+        ///// </summary>
+        ///// <param name="Taxi_Zones">pass by ref variable refering to taxi zone dataframe</param>
+        ///// <param name="currentZoneID">ID for the current taxi zone</param>
+        ///// <returns></returns>
+        //public static List<NeighborData> GetNeighbors(ref DataFrame Taxi_Zones, int currentZoneID)
+        //{
+
+        //}
+
+        ///// <summary>
+        ///// Returns the total number of yellow taxi trips that have a pickup/dropoff that match the currentZoneID
+        ///// </summary>
+        ///// <param name="Yellow_Tripdata">pass by ref variable refering to yellow_tripdata dataframe</param>
+        ///// <param name="currentZoneID">ID for the current taxi zone</param>
+        ///// <returns></returns>
+        //public static int getNumYellowTrips(ref DataFrame Yellow_Tripdata, int currentZoneID)
+        //{
+        //Yellow_Tripdata.Filter("PULocationID = 'currentZoneID' OR DOLocationID = 'currentZoneID'").Count();
+        //}
+
+        ///// <summary>
+        ///// Returns the total number of green taxi trips that have a pickup/dropoff that match the currentZoneID
+        ///// </summary>
+        ///// <param name="Green_Tripdata">pass by ref variable refering to green_tripdata dataframe</param>
+        ///// <param name="currentZoneID">ID for the current taxi zone</param>
+        ///// <returns></returns>
+        //public static int getNumGreenTrips(ref DataFrame Green_Tripdata, int currentZoneID)
+        //{
+        //Green_Tripdata.Filter("PULocationID = 'currentZoneID' OR DOLocationID = 'currentZoneID'").Count();
+        //}
+
+        ///// <summary>
+        ///// Returns the total number of fhv trips that have a pickup/dropoff that match the currentZoneID
+        ///// </summary>
+        ///// <param name="FHV_Tripdata">pass by ref variable refering to fhv_tripdata dataframe</param>
+        ///// <param name="currentZoneID">ID for the current taxi zone</param>
+        ///// <returns></returns>
+        //public static int getNumFHVTrips(ref DataFrame FHV_Tripdata, int currentZoneID)
+        //{
+        //FHV_Tripdata.Filter("PULocationID = 'currentZoneID' OR DOLocationID = 'currentZoneID'").Count();
+        //}
+
+        ///// <summary>
+        ///// Returns the total number of hvfhv trips that have a pickup/dropoff that match the currentZoneID
+        ///// </summary>
+        ///// <param name="HVFHV_Tripdata">pass by ref variable refering to hvfhv_tripdata dataframe</param>
+        ///// <param name="currentZoneID">ID for the current taxi zone</param>
+        ///// <returns></returns>
+        //public static int getNumHVFHVTrips(ref DataFrame HVFHV_Tripdata, int currentZoneID)
+        //{
+        //HVFHV_Tripdata.Filter("PULocationID = 'currentZoneID' OR DOLocationID = 'currentZoneID'").Count();
+        //}
+
+
+
+
     }
 }
