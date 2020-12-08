@@ -200,35 +200,39 @@ namespace Taxi_Spark_Algorithm
 
 
         
-        private static void BuildNeighborTable(int num_zones, double radius, SparkContext C,DataFrame Zone_Lookup)
+        private static void BuildNeighborTable(int num_zones, double radius, ref SparkContext C, ref DataFrame Zone_Lookup)
         {//We require a table detailing a neighboring regions in the DB.
-            var path = @"file.csv";//<-Will need to change this for release.
-            string text = "100,200,1.4150000"; 
-            byte[] data = Encoding.ASCII.GetBytes(text); 
+            //var path = @"file.csv";//<-Will need to change this for release.
+            //string text = "100,200,1.4150000"; 
+            //byte[] data = Encoding.ASCII.GetBytes(text); 
             double distance = 0.0;
-            DataFrame df3 = Zone_Lookup.filter(Zone_Lookup("_c1")==="1" && Zone_Lookup("_c1")==="2" ); ; //Intermediary dataframe
-            DataFrame df4 = Zone_Lookup.filter(Zone_Lookup("_c1")==="1" && Zone_Lookup("_c1")==="2" ); ; //Intermediary dataframe
-
+            DataFrame df3 = Zone_Lookup;  //Intermediary dataframe
+            DataFrame df4 = Zone_Lookup;//Intermediary dataframe
             
-            //Iteratively pull the coordinates from the taxi zone table. It only has num_zones items which should be 256 
-            for(int i = 0; i <= num_zones; ++i)
-            {
-                df3 = Zone_Lookup.Filter(Zone_Lookup("_c0") == i).Show(0); 
-                for(int j = 0; j <= num_zones; ++j)
+            //create two clones of Zone_Lookup
+                                 
+            using (StreamWriter output = new StreamWriter("/home/ubuntu/Cpts-415-Taxi-Spark-Data/taxi_zoneNeighbors.csv")) {
+                //Iteratively pull the coordinates from the taxi zone table. It only has num_zones items which should be 256 
+                for (int i = 0; i <= num_zones; ++i)
                 {
-                    df4 = Zone_Lookup.Filter(Zone_Lookup("_c0") == j).Show(0);
-                    distance = IsNeighbor(radius,df3.first().getDouble(4),df3.first().getDouble(5),df4.first().getDouble(4),df4.first().getDouble(5));
-                    if(distance != -1 && i != j)
+                    df3 = Zone_Lookup.Filter(String.Format("zoneID = {0}", i));
+                    for (int j = 0; j <= num_zones; ++j)
                     {
-                        text = i.ToString() + "," + j.ToString() + "," + distance.ToString() + "\n";
-                        data = Encoding.ASCII.GetBytes(text); 
-                        File.WriteAllBytes(path, data); 
-                        //Write to file
+                        df4 = Zone_Lookup.Filter(String.Format("zoneID = [0}", j));
+                        distance = IsNeighbor(radius, (double)df3.First().Get(4), (double)df3.First().Get(5), (double)df4.First().Get(4), (double)df4.First().Get(5));
+                        if (distance != -1 && i != j)
+                        {
+                            //text = i.ToString() + "," + j.ToString() + "," + distance.ToString() + "\n";
+                            //data = Encoding.ASCII.GetBytes(text);
+                            //File.WriteAllBytes(path, data);
+                            //Write to file
+                            output.WriteLine("{0},{1},{2}", i.ToString(), j.ToString(), distance);
+                        }
                     }
+                    //In a nested loop compare coordinates with all other regions which you also pull from the taxi zone table
+
                 }
-                //In a nested loop compare coordinates with all other regions which you also pull from the taxi zone table
-                
-            }         
+            }
             
         }//This function is intended to precompute neighbor relations which can be easily retrieved as distinct neighborhood lists given the current_id. These lists can be summed over to get the G* stat
         
