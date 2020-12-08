@@ -212,6 +212,8 @@ namespace Taxi_Spark_Algorithm
             //create two clones of Zone_Lookup
                                  
             using (StreamWriter output = new StreamWriter("/home/ubuntu/Cpts-415-Taxi-Spark-Data/taxi_zoneNeighbors.csv")) {
+                output.WriteLine("currentZone,neighbor,distance");
+
                 //Iteratively pull the coordinates from the taxi zone table. It only has num_zones items which should be 256 
                 for (int i = 0; i <= num_zones; ++i)
                 {
