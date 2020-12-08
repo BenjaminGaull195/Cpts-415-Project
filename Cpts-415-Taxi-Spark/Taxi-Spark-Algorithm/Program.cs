@@ -246,14 +246,14 @@ namespace Taxi_Spark_Algorithm
 
 
         //}
-        public static bool IsNeighbor(double radius, double x1, double y1, double x2, double y2)
+        public static double IsNeighbor(double radius, double x1, double y1, double x2, double y2)
         {
             x1 = Math.Pow((x1 - x2),2);
             y1 = Math.Pow((y1 - y2),2);
             if (radius >= Math.Sqrt((x1 + y1))){
-                return true;
+                return Math.Sqrt((x1 + y1));
             }
-            return false;
+            return -1;
         }//NeighborData and TaxiZonedata could be used to provide coordinates. A radius should be some constant in main or global
 
         //private static double Sum1(ref List<NeighborData> neighbors)
@@ -316,31 +316,40 @@ namespace Taxi_Spark_Algorithm
         //    return Math.Sqrt((sum/neighbors.Count) - Math.Pow(X, 2));
         //}
 
-        /*
-        private static void BuildNeighborTable(int num_zones, double radius, SparkContext C,DataFrame Zonedata_dataFrame){//We require a table detailing a neighboring regions in the DB.
-           
-            DataFrame df2; //The table being accumulated with neighbor relations.
-            DataFrame df3; //Intermediary dataframe
-            DataFrame df4; //Intermediary dataframe
+        
+        private static void BuildNeighborTable(int num_zones, double radius, SparkContext C,DataFrame Zone_Lookup)
+        {//We require a table detailing a neighboring regions in the DB.
+            var path = @"file.csv";//<-Will need to change this for release.
+            string text = "100,200,1.4150000"; 
+            byte[] data = Encoding.ASCII.GetBytes(text); 
+            double distance = 0.0;
+            DataFrame df3 = Zone_Lookup.filter(Zone_Lookup("_c1")==="1" && Zone_Lookup("_c1")==="2" ); ; //Intermediary dataframe
+            DataFrame df4 = Zone_Lookup.filter(Zone_Lookup("_c1")==="1" && Zone_Lookup("_c1")==="2" ); ; //Intermediary dataframe
+
+            
             //Iteratively pull the coordinates from the taxi zone table. It only has num_zones items which should be 256 
             for(int i = 0; i <= num_zones; ++i)
+            {
+                df3 = Zone_Lookup.Filter(Zone_Lookup("_c0") == i).Show(0); 
+                for(int j = 0; j <= num_zones; ++j)
                 {
-                    df3 = Zonedata_dataFrame.Filter(Zonedata_dataFrame("ZoneID") == i).Show(0); 
-                    for(int j = 0; j <= num_zones; ++j)
+                    df4 = Zone_Lookup.Filter(Zone_Lookup("_c0") == j).Show(0);
+                    distance = IsNeighbor(radius,df3.first().getDouble(4),df3.first().getDouble(5),df4.first().getDouble(4),df4.first().getDouble(5));
+                    if(distance != -1 && i != j)
                     {
-                        df4 = Zonedata_dataFrame.Filter(Zonedata_dataFrame("ZoneID") == j).Show(0);
-
-                        if(IsNeighbor(radius,df3.head().getDouble(1),df3.head().getDouble(2),df4.head().getDouble(1),df4.head().getDouble(2)) && i != j){//Need help extracting values from the coordinates from df3 and df4.
-                            df4 = C.(
-                            (i, j)
-                            ).toDF("Current_ID", "Neighbor_ID");//The zone ids within df3 and df4
-                            df2.Union(df4).Show(0);
-                        }
-                        //In a nested loop compare coordinates with all other regions which you also pull from the taxi zone table
+                        text = i.ToString() + "," + j.ToString() + "," + distance.ToString() + "\n";
+                        data = Encoding.ASCII.GetBytes(text); 
+                        File.WriteAllBytes(path, data); 
+                        //Write to file
                     }
                 }
+                //In a nested loop compare coordinates with all other regions which you also pull from the taxi zone table
+                
+            }         
+            
         }//This function is intended to precompute neighbor relations which can be easily retrieved as distinct neighborhood lists given the current_id. These lists can be summed over to get the G* stat
-        */
+        
+        //The above function requires the neighbor relations to be written to a file instead of returning a dataframe. Dataframes should act like instantiated classes
 
 
         //Queries:
