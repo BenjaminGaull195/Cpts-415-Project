@@ -55,6 +55,7 @@ namespace Taxi_Spark_Linux
 
             //Initial queries to aquire necessary data
             long num_taxi_zones = getNumTaxiZones(ref Zonedata_dataFrame);
+            Console.WriteLine(num_taxi_zones.ToString());
         }
 
         //Queries:

@@ -86,6 +86,7 @@ namespace Taxi_Spark_Algorithm
 
             //Initial queries to aquire necessary data
             long num_taxi_zones = getNumTaxiZones(ref Zonedata_dataFrame);
+            Console.WriteLine(num_taxi_zones.ToString());
 
 
             //list used to track output data
@@ -249,49 +250,49 @@ namespace Taxi_Spark_Algorithm
 
         //}
 
-        ///// <summary>
-        ///// Returns the total number of yellow taxi trips that have a pickup/dropoff that match the currentZoneID
-        ///// </summary>
-        ///// <param name="Yellow_Tripdata">pass by ref variable refering to yellow_tripdata dataframe</param>
-        ///// <param name="currentZoneID">ID for the current taxi zone</param>
-        ///// <returns></returns>
-        //public static int getNumYellowTrips(ref DataFrame Yellow_Tripdata, int currentZoneID)
-        //{
-        //Yellow_Tripdata.Filter("PULocationID = 'currentZoneID' OR DOLocationID = 'currentZoneID'").Count();
-        //}
+        /// <summary>
+        /// Returns the total number of yellow taxi trips that have a pickup/dropoff that match the currentZoneID
+        /// </summary>
+        /// <param name="Yellow_Tripdata">pass by ref variable refering to yellow_tripdata dataframe</param>
+        /// <param name="currentZoneID">ID for the current taxi zone</param>
+        /// <returns></returns>
+        public static long getNumYellowTrips(ref DataFrame Yellow_Tripdata, int currentZoneID)
+        {
+            return Yellow_Tripdata.Filter(String.Format("PULocationID = '{0}' OR DOLocationID = '{0}'", currentZoneID)).Count();
+        }
 
-        ///// <summary>
-        ///// Returns the total number of green taxi trips that have a pickup/dropoff that match the currentZoneID
-        ///// </summary>
-        ///// <param name="Green_Tripdata">pass by ref variable refering to green_tripdata dataframe</param>
-        ///// <param name="currentZoneID">ID for the current taxi zone</param>
-        ///// <returns></returns>
-        //public static int getNumGreenTrips(ref DataFrame Green_Tripdata, int currentZoneID)
-        //{
-        //Green_Tripdata.Filter("PULocationID = 'currentZoneID' OR DOLocationID = 'currentZoneID'").Count();
-        //}
+        /// <summary>
+        /// Returns the total number of green taxi trips that have a pickup/dropoff that match the currentZoneID
+        /// </summary>
+        /// <param name="Green_Tripdata">pass by ref variable refering to green_tripdata dataframe</param>
+        /// <param name="currentZoneID">ID for the current taxi zone</param>
+        /// <returns></returns>
+        public static long getNumGreenTrips(ref DataFrame Green_Tripdata, int currentZoneID)
+        {
+            return Green_Tripdata.Filter(String.Format("PULocationID = '{0}' OR DOLocationID = '{0}'", currentZoneID)).Count();
+        }
 
-        ///// <summary>
-        ///// Returns the total number of fhv trips that have a pickup/dropoff that match the currentZoneID
-        ///// </summary>
-        ///// <param name="FHV_Tripdata">pass by ref variable refering to fhv_tripdata dataframe</param>
-        ///// <param name="currentZoneID">ID for the current taxi zone</param>
-        ///// <returns></returns>
-        //public static int getNumFHVTrips(ref DataFrame FHV_Tripdata, int currentZoneID)
-        //{
-        //FHV_Tripdata.Filter("PULocationID = 'currentZoneID' OR DOLocationID = 'currentZoneID'").Count();
-        //}
+        /// <summary>
+        /// Returns the total number of fhv trips that have a pickup/dropoff that match the currentZoneID
+        /// </summary>
+        /// <param name="FHV_Tripdata">pass by ref variable refering to fhv_tripdata dataframe</param>
+        /// <param name="currentZoneID">ID for the current taxi zone</param>
+        /// <returns></returns>
+        public static long getNumFHVTrips(ref DataFrame FHV_Tripdata, int currentZoneID)
+        {
+            return FHV_Tripdata.Filter(String.Format("PULocationID = '{0}' OR DOLocationID = '{0}'", currentZoneID)).Count();
+        }
 
-        ///// <summary>
-        ///// Returns the total number of hvfhv trips that have a pickup/dropoff that match the currentZoneID
-        ///// </summary>
-        ///// <param name="HVFHV_Tripdata">pass by ref variable refering to hvfhv_tripdata dataframe</param>
-        ///// <param name="currentZoneID">ID for the current taxi zone</param>
-        ///// <returns></returns>
-        //public static int getNumHVFHVTrips(ref DataFrame HVFHV_Tripdata, int currentZoneID)
-        //{
-        //HVFHV_Tripdata.Filter("PULocationID = 'currentZoneID' OR DOLocationID = 'currentZoneID'").Count();
-        //}
+        /// <summary>
+        /// Returns the total number of hvfhv trips that have a pickup/dropoff that match the currentZoneID
+        /// </summary>
+        /// <param name="HVFHV_Tripdata">pass by ref variable refering to hvfhv_tripdata dataframe</param>
+        /// <param name="currentZoneID">ID for the current taxi zone</param>
+        /// <returns></returns>
+        public static long getNumHVFHVTrips(ref DataFrame HVFHV_Tripdata, int currentZoneID)
+        {
+            return HVFHV_Tripdata.Filter(String.Format("PULocationID = '{0}' OR DOLocationID = '{0}'", currentZoneID)).Count();
+        }
 
     }
 
