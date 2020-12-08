@@ -29,7 +29,7 @@ namespace Taxi_Spark_Algorithm
     
     class TaxiZoneData
     {
-        public int zoneID { get; set; }
+        public long zoneID { get; set; }
         public double zscore { get; set; }
     }
 
@@ -56,66 +56,17 @@ namespace Taxi_Spark_Algorithm
             SparkSession spark = SparkSession.Builder().AppName("Taxi-Spark").GetOrCreate();
 
 
-            //Build Dataset
-            DataFrame YellowTaxi_dataFrame = spark.Read().Option("header", true).Csv("yellow_tripdata_2020-01test.csv");
-            DataFrame GreenTaxi_dataFrame = spark.Read().Option("header", true).Csv("green_tripdata_2020-01test.csv");
-            DataFrame Fhv_dataFrame = spark.Read().Option("header", true).Csv("fhv_tripdata_2020-01test.csv");
-            DataFrame Hvfhv_dataFrame = spark.Read().Option("header", true).Csv("fhvhv_tripdata_2020-01test.csv");
-            DataFrame Zonedata_dataFrame = spark.Read().Option("header", true).Csv("zones_data.csv");
+            //Build Dataset; TODO: Test reading multiple files from directory
+            //Dataframes contain the data from the months of January - July.
+            DataFrame YellowTaxi_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/yellow/");
+            DataFrame GreenTaxi_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/green/");
+            DataFrame Fhv_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/fhv/");
+            DataFrame Hvfhv_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/fhvhv/");
+            DataFrame Zonedata_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/taxi_zonesXY.csv");
 
             //Unioned the above dataframes with temporary ones containing the rest of the data
 
-            //DataFrame temp = spark.Read().Csv("yellow_tripdata_2020-02test.csv");
-            //YellowTaxi_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("yellow_tripdata_2020-03test.csv");
-            //YellowTaxi_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("yellow_tripdata_2020-04test.csv");
-            //YellowTaxi_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("yellow_tripdata_2020-05test.csv");
-            //YellowTaxi_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("yellow_tripdata_2020-06test.csv");
-            //YellowTaxi_dataFrame.Union(temp);
-
-            //temp = spark.Read().Csv("green_tripdata_2020-02test.csv");
-            //GreenTaxi_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("green_tripdata_2020-03test.csv");
-            //GreenTaxi_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("green_tripdata_2020-04test.csv");
-            //GreenTaxi_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("green_tripdata_2020-05test.csv");
-            //GreenTaxi_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("green_tripdata_2020-06test.csv");
-            //GreenTaxi_dataFrame.Union(temp);
-
-            //temp = spark.Read().Csv("fhv_tripdata_2020-02test.csv");
-            //Fhv_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("fhv_tripdata_2020-03test.csv");
-            //Fhv_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("fhv_tripdata_2020-04test.csv");
-            //Fhv_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("fhv_tripdata_2020-05test.csv");
-            //Fhv_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("fhv_tripdata_2020-06test.csv");
-            //Fhv_dataFrame.Union(temp);
-
-            //temp = spark.Read().Csv("fhvhv_tripdata_2020-02test.csv");
-            //Hvfhv_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("fhvhv_tripdata_2020-03test.csv");
-            //Hvfhv_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("fhvhv_tripdata_2020-04test.csv");
-            //Hvfhv_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("fhvhv_tripdata_2020-05test.csv");
-            //Hvfhv_dataFrame.Union(temp);
-            //temp = spark.Read().Csv("fhvhv_tripdata_2020-06test.csv");
-            //Hvfhv_dataFrame.Union(temp);
-
-
-            //Dataframes contain the data from the months of January - July.
-
-
-
-
-
+            
             //Test Lines
             Console.WriteLine("Debug:: Dataframe Schems:");
             GreenTaxi_dataFrame.PrintSchema();
@@ -134,14 +85,14 @@ namespace Taxi_Spark_Algorithm
 
 
             //Initial queries to aquire necessary data
-            int num_taxi_zones = 0;// getNumTaxiZones(ref Zonedata_dataFrame);
+            long num_taxi_zones = getNumTaxiZones(ref Zonedata_dataFrame);
 
 
             //list used to track output data
             ComputationData computationData = new ComputationData();
 
             List<NeighborData> neighbors = new List<NeighborData>();
-            for (int i = 0; i < num_taxi_zones; ++i)
+            for (long i = 0; i < num_taxi_zones; ++i)
             {
                 //generate neighbor list for current taxizone
 
@@ -245,7 +196,7 @@ namespace Taxi_Spark_Algorithm
             return false;
         }//NeighborData and TaxiZonedata could be used to provide coordinates. A radius should be some constant in main or global
 
-        
+
 
         /*
         private static void BuildNeighborTable(int num_zones, double radius, SparkContext C,DataFrame Zonedata_dataFrame){//We require a table detailing a neighboring regions in the DB.
@@ -276,15 +227,15 @@ namespace Taxi_Spark_Algorithm
 
         //Queries:
 
-        ///// <summary>
-        ///// Used to get the total number of taxizones
-        ///// </summary>
-        ///// <param name="Taxi_Zones">pass by ref variable refering to taxi zone dataframe</param>
-        ///// <returns>num taxi zones</returns>
-        //public static int getNumTaxiZones(ref DataFrame Taxi_Zones)
-        //{
-            //Taxi_Zones.Count();
-        //}
+        /// <summary>
+        /// Used to get the total number of taxizones
+        /// </summary>
+        /// <param name="Taxi_Zones">pass by ref variable refering to taxi zone dataframe</param>
+        /// <returns>num taxi zones</returns>
+        public static long getNumTaxiZones(ref DataFrame Taxi_Zones)
+        {
+            return Taxi_Zones.Count();
+        }
 
 
         ///// <summary>
@@ -295,7 +246,7 @@ namespace Taxi_Spark_Algorithm
         ///// <returns></returns>
         //public static List<NeighborData> GetNeighbors(ref DataFrame Taxi_Zones, int currentZoneID)
         //{
-            
+
         //}
 
         ///// <summary>
@@ -306,7 +257,7 @@ namespace Taxi_Spark_Algorithm
         ///// <returns></returns>
         //public static int getNumYellowTrips(ref DataFrame Yellow_Tripdata, int currentZoneID)
         //{
-            //Yellow_Tripdata.Filter("PULocationID = 'currentZoneID' OR DOLocationID = 'currentZoneID'").Count();
+        //Yellow_Tripdata.Filter("PULocationID = 'currentZoneID' OR DOLocationID = 'currentZoneID'").Count();
         //}
 
         ///// <summary>
@@ -317,7 +268,7 @@ namespace Taxi_Spark_Algorithm
         ///// <returns></returns>
         //public static int getNumGreenTrips(ref DataFrame Green_Tripdata, int currentZoneID)
         //{
-            //Green_Tripdata.Filter("PULocationID = 'currentZoneID' OR DOLocationID = 'currentZoneID'").Count();
+        //Green_Tripdata.Filter("PULocationID = 'currentZoneID' OR DOLocationID = 'currentZoneID'").Count();
         //}
 
         ///// <summary>
@@ -328,7 +279,7 @@ namespace Taxi_Spark_Algorithm
         ///// <returns></returns>
         //public static int getNumFHVTrips(ref DataFrame FHV_Tripdata, int currentZoneID)
         //{
-            //FHV_Tripdata.Filter("PULocationID = 'currentZoneID' OR DOLocationID = 'currentZoneID'").Count();
+        //FHV_Tripdata.Filter("PULocationID = 'currentZoneID' OR DOLocationID = 'currentZoneID'").Count();
         //}
 
         ///// <summary>
@@ -339,7 +290,7 @@ namespace Taxi_Spark_Algorithm
         ///// <returns></returns>
         //public static int getNumHVFHVTrips(ref DataFrame HVFHV_Tripdata, int currentZoneID)
         //{
-            //HVFHV_Tripdata.Filter("PULocationID = 'currentZoneID' OR DOLocationID = 'currentZoneID'").Count();
+        //HVFHV_Tripdata.Filter("PULocationID = 'currentZoneID' OR DOLocationID = 'currentZoneID'").Count();
         //}
 
     }

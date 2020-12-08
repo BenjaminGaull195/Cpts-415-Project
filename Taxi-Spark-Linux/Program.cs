@@ -26,10 +26,10 @@ namespace Taxi_Spark_Linux
 
             string datapath = "";
             //Build Dataset
-            DataFrame YellowTaxi_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/TEST/yellow_tripdata_2020-02_test.csv");
-            DataFrame GreenTaxi_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/TEST/green_tripdata_2020-02_test.csv");
-            DataFrame Fhv_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/TEST/fhv_tripdata_2020-02_test.csv");
-            DataFrame Hvfhv_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/TEST/fhvhv_tripdata_2020-02_test.csv");
+            DataFrame YellowTaxi_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/TEST/yellow/");
+            DataFrame GreenTaxi_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/TEST/green/");
+            DataFrame Fhv_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/TEST/fhv/");
+            DataFrame Hvfhv_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/TEST/fhvhv/");
             DataFrame Zonedata_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/TEST/taxi_zonesXY_test.csv");
 
             //Unioned the above dataframes with temporary ones containing the rest of the data
