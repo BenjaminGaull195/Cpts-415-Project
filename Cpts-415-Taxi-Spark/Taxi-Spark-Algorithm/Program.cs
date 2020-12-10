@@ -221,7 +221,7 @@ namespace Taxi_Spark_Algorithm
                     for (int j = 0; j <= num_zones; ++j)
                     {
                         df4 = Zone_Lookup.Filter(String.Format("zoneID = [0}", j));
-                        distance = IsNeighbor(radius, (double)df3.First().Get(4), (double)df3.First().Get(5), (double)df4.First().Get(4), (double)df4.First().Get(5));
+                        distance = IsNeighbor(radius, Convert.ToDouble(df3.First().Get(4)), Convert.ToDouble(df3.First().Get(5)), Convert.ToDouble(df4.First().Get(4)), Convert.ToDouble(df4.First().Get(5)));
                         if (distance != -1 && i != j)
                         {
                             //text = i.ToString() + "," + j.ToString() + "," + distance.ToString() + "\n";
