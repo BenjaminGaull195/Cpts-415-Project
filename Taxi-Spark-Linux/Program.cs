@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
+using System.Linq;
 
 //Spark libraries
 using Microsoft.Spark;
@@ -119,33 +120,11 @@ namespace Taxi_Spark_Linux
             NeighborTable.Show();
             Console.WriteLine("Number of entries: {0}", NeighborTable.Count());
 
-            //Test Lines to verify successful data reads
             
-            
-            
-
-            
-            
-
-            
-            
-            
-
-            
-            
-            
-
-            
-            
-            
-	        
-
-            
-	        
-            
-
             //Initial queries to aquire necessary data
             
+
+
         }
 
         //Queries:
@@ -167,10 +146,10 @@ namespace Taxi_Spark_Linux
         /// <param name="Taxi_Zones">pass by ref variable refering to taxi zone dataframe</param>
         /// <param name="currentZoneID">ID for the current taxi zone</param>
         /// <returns></returns>
-        public static List<NeighborData> GetNeighbors(ref DataFrame Taxi_Zones, int currentZoneID)
-        {
-
-        }
+        //public static List<NeighborData> GetNeighbors(ref DataFrame Taxi_Zones, int currentZoneID)
+        //{
+        //
+        //}
 
         /// <summary>
         /// Returns the total number of yellow taxi trips that have a pickup/dropoff that match the currentZoneID
