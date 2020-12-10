@@ -152,10 +152,20 @@ namespace Taxi_Spark_Linux
         /// <param name="Taxi_Zones">pass by ref variable refering to taxi zone dataframe</param>
         /// <param name="currentZoneID">ID for the current taxi zone</param>
         /// <returns></returns>
-        //public static List<NeighborData> GetNeighbors(ref DataFrame Taxi_Zones, int currentZoneID)
-        //{
-        //
-        //}
+        public static List<NeighborData> GetNeighbors(ref DataFrame Taxi_Zones, int currentZoneID)
+        {
+            
+            DataFrame temp = NeighborTable.Where(String.Format("currentZone = '{0}'", currentZoneID)).Select("neighbor", "distance");
+            
+            Row [] neighbors = temp.Collect();
+            
+            List<NeighborData> neighborData = new List<NeighborData>(); 
+            foreach(Row cur in taxi_zones) 
+            {
+                neighborData.Add(new NeighborData(){});
+            }
+            return neighborData;
+        }
 
         /// <summary>
         /// Returns the total number of yellow taxi trips that have a pickup/dropoff that match the currentZoneID
@@ -216,7 +226,7 @@ namespace Taxi_Spark_Linux
         }	
 
 
-	    private static void BuildNeighborTable(int num_zones, double radius, ref DataFrame Zone_Lookup)
+	private static void BuildNeighborTable(int num_zones, double radius, ref DataFrame Zone_Lookup)
         {//We require a table detailing a neighboring regions in the DB.
             //var path = @"file.csv";//<-Will need to change this for release.
             //string text = "100,200,1.4150000"; 
@@ -254,6 +264,11 @@ namespace Taxi_Spark_Linux
                     //In a nested loop compare coordinates with all other regions which you also pull from the taxi zone table
                 }
             }
+	
+        }
+	public static List<NeighborData> readNeighborTable(ref DataFrame NeighborTable, int currentZoneID)
+        {
+            
         }
     }
 }

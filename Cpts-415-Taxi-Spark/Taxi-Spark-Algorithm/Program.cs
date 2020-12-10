@@ -45,7 +45,6 @@ namespace Taxi_Spark_Algorithm
         public string queryStartDateTime { get; set; }
         public string queryEndDateTime { get; set; }
         public List<TaxiZoneData> taxiZoneData { get; set; }
-
     }
 
     class Program
