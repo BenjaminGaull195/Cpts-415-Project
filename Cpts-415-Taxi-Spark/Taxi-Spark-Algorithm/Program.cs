@@ -207,7 +207,7 @@ namespace Taxi_Spark_Algorithm
             //byte[] data = Encoding.ASCII.GetBytes(text); 
             double distance = 0.0;
             DataFrame df3 = Zone_Lookup;  //Intermediary dataframe
-            DataFrame df4 = Zone_Lookup;//Intermediary dataframe
+            DataFrame df4 = Zone_Lookup;  //Intermediary dataframe
             
             //create two clones of Zone_Lookup
                                  
