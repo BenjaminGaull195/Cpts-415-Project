@@ -35,51 +35,55 @@ namespace Taxi_Spark_Linux
 
             //
             stopwatch.Start();
-            DataFrame YellowTaxi_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/TEST/yellow/");
+            DataFrame YellowTaxi_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/yellow/");
             stopwatch.Stop();
             ts = stopwatch.Elapsed;
             elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
             Console.WriteLine("\nyellow Taxi:");
             Console.WriteLine("Time to load Yellow Taxi Data: " + elapsedTime);
+            Console.WriteLine("Number of entries: {0}", YellowTaxi_dataFrame.Count());
             YellowTaxi_dataFrame.PrintSchema();
             YellowTaxi_dataFrame.Show();
-            Console.WriteLine("Number of entries: {0}", YellowTaxi_dataFrame.Count());
+            
 
             //Green Taxi Data Load and Debug Info
             stopwatch.Start();
-            DataFrame GreenTaxi_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/TEST/green/");
+            DataFrame GreenTaxi_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/green/");
             stopwatch.Stop();
             ts = stopwatch.Elapsed;
             elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
             Console.WriteLine("\nGreen Taxi:");
             Console.WriteLine("Time to load Green Taxi Data: " + elapsedTime);
+            Console.WriteLine("Number of entries: {0}", GreenTaxi_dataFrame.Count());
             GreenTaxi_dataFrame.PrintSchema();
             GreenTaxi_dataFrame.Show();
-            Console.WriteLine("Number of entries: {0}", GreenTaxi_dataFrame.Count());
+            
 
             //FHV Data Load and Debug Info
             stopwatch.Start();
-            DataFrame Fhv_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/TEST/fhv/");
+            DataFrame Fhv_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/fhv/");
             stopwatch.Stop();
             ts = stopwatch.Elapsed;
             elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
             Console.WriteLine("\nFor Hire Vehicle:");
             Console.WriteLine("Time to load FHV Data: " + elapsedTime);
+            Console.WriteLine("Number of entries: {0}", Fhv_dataFrame.Count());
             Fhv_dataFrame.PrintSchema();
             Fhv_dataFrame.Show();
-            Console.WriteLine("Number of entries: {0}", Fhv_dataFrame.Count());
+            
 
             //HVFHV Data Load and Debug Info
             stopwatch.Start();
-            DataFrame Hvfhv_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/TEST/fhvhv/");
+            DataFrame Hvfhv_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/fhvhv/");
             stopwatch.Stop();
             ts = stopwatch.Elapsed;
             elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
             Console.WriteLine("\nHigh Volume For Hire Vehicle:");
             Console.WriteLine("Time to load FHVHV Data: " + elapsedTime);
+            Console.WriteLine("Number of entries: {0}", Hvfhv_dataFrame.Count());
             Hvfhv_dataFrame.PrintSchema();
             Hvfhv_dataFrame.Show();
-            Console.WriteLine("Number of entries: {0}", Hvfhv_dataFrame.Count());
+            
 
             //Taxi Zone Data Load and Debug Info
             stopwatch.Start();
@@ -89,9 +93,10 @@ namespace Taxi_Spark_Linux
             elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
             Console.WriteLine("\nTaxi Zones:");
             Console.WriteLine("Time to load Taxi Zone Data: " + elapsedTime);
+            Console.WriteLine("Number of entries: {0}", Zonedata_dataFrame.Count());
             Zonedata_dataFrame.PrintSchema();
             Zonedata_dataFrame.Show();
-            Console.WriteLine("Number of entries: {0}", Zonedata_dataFrame.Count());
+            
 
             //If Neighbor Data does not exist, generate data
 	        if(!File.Exists("/home/ubuntu/Cpts-415-Taxi-Spark-Data/taxi_zoneNeighbors.csv")) 
@@ -116,9 +121,10 @@ namespace Taxi_Spark_Linux
             elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
             Console.WriteLine("\nDebug:: Neighbor Table:");
             Console.WriteLine("Time to load Taxi Zone Neighbor Data: " + elapsedTime);
+            Console.WriteLine("Number of entries: {0}", NeighborTable.Count());
             NeighborTable.PrintSchema();
             NeighborTable.Show();
-            Console.WriteLine("Number of entries: {0}", NeighborTable.Count());
+            
 
             
             //Initial queries to aquire necessary data
