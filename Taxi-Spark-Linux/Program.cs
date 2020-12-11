@@ -1,4 +1,8 @@
-
+/*
+  
+  
+ 
+ */
 
 
 
@@ -24,6 +28,9 @@ using Microsoft.Spark.Sql;
 
 namespace Taxi_Spark_Linux
 {
+    /// <summary>
+    /// Used to store necessary neighbor data for easy access
+    /// </summary>
     public class NeighborData
     {
         public int neighborID {get; set;}
@@ -31,12 +38,18 @@ namespace Taxi_Spark_Linux
         public double distance { get; set; } 
     }
 
+    /// <summary>
+    /// used to store the output data for its respective taxi zone
+    /// </summary>
     class TaxiZoneData
     {
         public long zoneID { get; set; }
         public double zscore { get; set; }
     }
 
+    /// <summary>
+    /// used to output entire data set to json file (Not Currently Working)
+    /// </summary>
     class ComputationData
     {
         public ComputationData()
@@ -124,7 +137,7 @@ namespace Taxi_Spark_Linux
 
             //Taxi Zone Data Load and Debug Info
             stopwatch.Start();
-            DataFrame Zonedata_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/TEST/taxi_zonesXY_test.csv");
+            DataFrame Zonedata_dataFrame = spark.Read().Option("header", true).Csv("/home/ubuntu/Cpts-415-Taxi-Spark-Data/taxi_zonesXY.csv");
             Zonedata_dataFrame.Cache();
             Console.WriteLine("Number of entries: {0}", Zonedata_dataFrame.Count());
             Zonedata_dataFrame.PrintSchema();
@@ -257,7 +270,7 @@ namespace Taxi_Spark_Linux
         /// </summary>
         /// <param name="Yellow_Tripdata">pass by ref variable refering to yellow_tripdata dataframe</param>
         /// <param name="currentZoneID">ID for the current taxi zone</param>
-        /// <returns></returns>
+        /// <returns>Returns the total number of Yellow Taxi trips to/from the current ZoneID</returns>
         public static long getNumYellowTrips(ref DataFrame Yellow_Tripdata, int currentZoneID)
         {
             //Console.WriteLine("Counting number of Yellow Trips");
@@ -271,7 +284,7 @@ namespace Taxi_Spark_Linux
         /// </summary>
         /// <param name="Green_Tripdata">pass by ref variable refering to green_tripdata dataframe</param>
         /// <param name="currentZoneID">ID for the current taxi zone</param>
-        /// <returns></returns>
+        /// <returns>Returns the total number of Green Taxi trips to/from the current ZoneID</returns>
         public static long getNumGreenTrips(ref DataFrame Green_Tripdata, int currentZoneID)
         {
             //Console.WriteLine("Counting number of Green Trips");
@@ -285,7 +298,7 @@ namespace Taxi_Spark_Linux
         /// </summary>
         /// <param name="FHV_Tripdata">pass by ref variable refering to fhv_tripdata dataframe</param>
         /// <param name="currentZoneID">ID for the current taxi zone</param>
-        /// <returns></returns>
+        /// <returns>Returns the total number of FHV trips to/from the current ZoneID</returns>
         public static long getNumFHVTrips(ref DataFrame FHV_Tripdata, int currentZoneID)
         {
             //Console.WriteLine("Counting number of FHV Trips");
@@ -299,7 +312,7 @@ namespace Taxi_Spark_Linux
         /// </summary>
         /// <param name="HVFHV_Tripdata">pass by ref variable refering to hvfhv_tripdata dataframe</param>
         /// <param name="currentZoneID">ID for the current taxi zone</param>
-        /// <returns></returns>
+        /// <returns>Returns the total number of HVFHV trips to/from the current ZoneID</returns>
         public static long getNumHVFHVTrips(ref DataFrame HVFHV_Tripdata, int currentZoneID)
         {
             //Console.WriteLine("Counting number of HVFHV Trips");
@@ -309,7 +322,11 @@ namespace Taxi_Spark_Linux
         }
 
 
-        //Implemented Parallel Algorithm Implementation 
+        /// <summary>
+        /// Calculates a zscore statistic for the current taxi zone based on data from its neighbors
+        /// </summary>
+        /// <param name="neighbors">List of NeighborData for current Taxi Zone</param>
+        /// <returns>Returns the zscore for the current zone</returns>
         public static double Getis_Ord_Stat(List<NeighborData> neighbors)
         {
             double _sum1 = 0, _sum2 = 0, _sum3 = 0, _X = 0, _S = 0;
@@ -383,7 +400,11 @@ namespace Taxi_Spark_Linux
         }
 
 
-        
+        /// <summary>
+        /// Calculates the sum of the product of the neighbors distance and attribute weight
+        /// </summary>
+        /// <param name="neighbors">List of NeighborData</param>
+        /// <returns></returns>
         public static double Sum1(ref List<NeighborData> neighbors)
         {
             double sum = 0;
@@ -396,6 +417,11 @@ namespace Taxi_Spark_Linux
             return sum;
         }
 
+        /// <summary>
+        /// Calculates the sum of the niehgbors distance
+        /// </summary>
+        /// <param name="neighbors">List of NeighborData</param>
+        /// <returns></returns>
         public static double Sum2(ref List<NeighborData> neighbors)
         {
             double sum = 0;
@@ -408,6 +434,11 @@ namespace Taxi_Spark_Linux
             return sum;
         }
 
+        /// <summary>
+        /// Calculates the sum of the square of the neighbors distance
+        /// </summary>
+        /// <param name="neighbors">List of NeighborData</param>
+        /// <returns></returns>
         public static double Sum3(ref List<NeighborData> neighbors)
         {
             double sum = 0;
@@ -420,6 +451,11 @@ namespace Taxi_Spark_Linux
             return sum;
         }
 
+        /// <summary>
+        /// Calculates the average distance of the neighbors
+        /// </summary>
+        /// <param name="neighbors">List of NeighborData</param>
+        /// <returns></returns>
         public static double X(ref List<NeighborData> neighbors)
         {
             double sum = 0;
@@ -432,6 +468,12 @@ namespace Taxi_Spark_Linux
             return sum / neighbors.Count;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="neighbors">List of NeighborData</param>
+        /// <param name="X">Average distance of neighbors</param>
+        /// <returns></returns>
         public static double S(ref List<NeighborData> neighbors, double X)
         {
             double sum = 0;
@@ -448,7 +490,15 @@ namespace Taxi_Spark_Linux
         }
 
 
-
+        /// <summary>
+        /// Determines of a taxizone wi within a certain distance of another
+        /// </summary>
+        /// <param name="radius">maximum distance</param>
+        /// <param name="x1">x coordinate from taxi zone 1</param>
+        /// <param name="y1">y coordinate from taxi zone 1</param>
+        /// <param name="x2">x coordinate from taxi zone 2</param>
+        /// <param name="y2">y coordinate from taxi zone 2</param>
+        /// <returns>returns distance if within radius, else returns -1</returns>
         public static double IsNeighbor(double radius, double x1, double y1, double x2, double y2)
         {
             x1 = Math.Pow((x1 - x2),2);
@@ -459,7 +509,12 @@ namespace Taxi_Spark_Linux
             return -1;
         }	
 
-
+        /// <summary>
+        /// Builds a csv file containing the neighbor relational data
+        /// </summary>
+        /// <param name="num_zones">number of zones</param>
+        /// <param name="radius">maximum distance for neighbors</param>
+        /// <param name="Zone_Lookup">reference to Taxi_zone dataframe</param>
 	    private static void BuildNeighborTable(int num_zones, double radius, ref DataFrame Zone_Lookup)
         {//We require a table detailing a neighboring regions in the DB.
             //var path = @"file.csv";//<-Will need to change this for release.
