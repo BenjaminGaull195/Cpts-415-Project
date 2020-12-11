@@ -27,16 +27,13 @@ namespace Getis_Ord_Unit_Test
                 Console.WriteLine("\t\tNeighbor {0}: Attribute={1}, Distance={2}", i, testData[i].attribute, testData[i].distance);
             }
 
-            try
-            {
-                double sum1 = Getis_Ord.Sum1(ref testData);
-                Console.WriteLine("\tSum1 = {0}", sum1);
-                Assert.AreEqual(100.0, sum1);
-            }
-            catch (AssertFailedException afe)
-            {
-                Console.WriteLine(afe.Message.ToString());
-            }
+            
+            
+            double sum1 = Getis_Ord.Sum1(ref testData);
+            Console.WriteLine("\tSum1 = {0}", sum1);
+            Assert.AreEqual(100.0, sum1);
+            
+            
         }
 
         [TestMethod]
@@ -55,16 +52,13 @@ namespace Getis_Ord_Unit_Test
                 Console.WriteLine("\t\tNeighbor {0}: Attribute={1}, Distance={2}", i, testData[i].attribute, testData[i].distance);
             }
 
-            try
-            { 
-                double sum2 = Getis_Ord.Sum1(ref testData);
-                Console.WriteLine("\tSum2 = {0}", sum2);
-                Assert.AreEqual(75.0, sum2);
-            }
-            catch (AssertFailedException afe)
-            {
-                Console.WriteLine(afe.Message.ToString());
-            }
+            
+            
+            double sum2 = Getis_Ord.Sum2(ref testData);
+            Console.WriteLine("\tSum2 = {0}", sum2);
+            Assert.AreEqual(6.1, sum2);
+            
+            
         }
 
         [TestMethod]
@@ -83,16 +77,13 @@ namespace Getis_Ord_Unit_Test
                 Console.WriteLine("\t\tNeighbor {0}: Attribute={1}, Distance={2}", i, testData[i].attribute, testData[i].distance);
             }
 
-            try
-            { 
-                double sum3 = Getis_Ord.Sum1(ref testData);
-                Console.WriteLine("\tSum3 = {0}", sum3);
-                Assert.AreEqual(1619, sum3);
-            }
-            catch (AssertFailedException afe)
-            {
-                Console.WriteLine(afe.Message.ToString());
-            }
+            
+            
+            double sum3 = Getis_Ord.Sum3(ref testData);
+            Console.WriteLine("\tSum3 = {0}", sum3);
+            Assert.AreEqual(10.39, sum3);
+            
+            
         }
 
         [TestMethod]
@@ -111,16 +102,13 @@ namespace Getis_Ord_Unit_Test
                 Console.WriteLine("\t\tNeighbor {0}: Attribute={1}, Distance={2}", i, testData[i].attribute, testData[i].distance);
             }
 
-            try
-            { 
-                double X = Getis_Ord.X(ref testData);
-                Console.WriteLine("\tX = {0}", X);
-                Assert.AreEqual(1.525, X);
-            }
-            catch (AssertFailedException afe)
-            {
-                Console.WriteLine(afe.Message.ToString());
-            }
+            
+            
+            double X = Getis_Ord.X(ref testData);
+            Console.WriteLine("\tX = {0}", X);
+            Assert.AreEqual(18.75, X);
+            
+            
         }
 
         [TestMethod]
@@ -139,17 +127,14 @@ namespace Getis_Ord_Unit_Test
                 Console.WriteLine("\t\tNeighbor {0}: Attribute={1}, Distance={2}", i, testData[i].attribute, testData[i].distance);
             }
 
-            try
-            { 
-                double X = Getis_Ord.X(ref testData);
-                double S = Getis_Ord.S(ref testData, X);
-                Console.WriteLine("\tS = {0}", S);
-                Assert.AreEqual(0.5214163404, S);
-            }
-            catch (AssertFailedException afe)
-            {
-                Console.WriteLine(afe.Message.ToString());
-            }
+            
+            
+            double X = Getis_Ord.X(ref testData);
+            double S = Getis_Ord.S(ref testData, X);
+            Console.WriteLine("\tS = {0}", S);
+            Assert.AreEqual(7.292976073, S);
+            
+            
         }
 
         [TestMethod]
@@ -168,15 +153,11 @@ namespace Getis_Ord_Unit_Test
                 Console.WriteLine("\t\tNeighbor {0}: Attribute={1}, Distance={2}", i, testData[i].attribute, testData[i].distance);
             }
 
-            try { 
-                double zscore = Getis_Ord.Getis_Ord_Stat(testData);
-                Console.WriteLine("\tzscore = {0}", zscore);
-                Assert.AreEqual(-1.636888371, zscore);
-            }
-            catch (AssertFailedException afe)
-            {
-                Console.WriteLine(afe.Message.ToString());
-            }
+            double zscore = Getis_Ord.Getis_Ord_Stat(testData);
+            Console.WriteLine("\tzscore = {0}", zscore);
+            Assert.AreEqual(-1.636888371, zscore);
+            
+            
 
         }
 

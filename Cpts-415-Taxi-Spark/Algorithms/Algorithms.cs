@@ -79,7 +79,13 @@ namespace Algorithms
             _S = S(ref neighbors, _X);
 
             //compute stat and return
-            double zscore = (_sum1 - (_X * _sum2)) / (_S * Math.Sqrt((neighbors.Count * _sum3 - _sum2) / (neighbors.Count - 1)));
+            double temp1 = _X * _sum2;
+            double temp2 = (_sum1 - temp1);
+            double temp3 = neighbors.Count * _sum3;
+            double temp4 = Math.Pow(_sum2, 2);
+            double temp5 = (temp3 - temp4);
+            double temp6 = (neighbors.Count - 1);
+            double zscore = temp2 / (_S * Math.Sqrt( temp5 / temp6));
             return zscore;
 
 
@@ -144,8 +150,10 @@ namespace Algorithms
             {
                 sum += (data.attribute * data.attribute);
             }
-
-            return Math.Sqrt((sum / neighbors.Count) - Math.Pow(X, 2));
+            double temp1 = (sum / neighbors.Count);
+            double temp2 = Math.Pow(X, 2);
+            double temp3 =  Math.Sqrt(temp1 - temp2);
+            return temp3;
         }
 
 
