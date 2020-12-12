@@ -1,10 +1,3 @@
-/*
-  
-  
- 
- */
-
-
 
 //commonly used libraries
 using System;
@@ -191,13 +184,7 @@ namespace Taxi_Spark_Linux
                 //get list of neighbors for current taxi zone
                 neighbors = GetNeighbors(ref NeighborTable, ref YellowTaxi_dataFrame, ref GreenTaxi_dataFrame, ref Fhv_dataFrame, ref Hvfhv_dataFrame, i);
 
-                //Console.WriteLine("ZoneID = {0} : ", i);
-                //foreach (var cur in neighbors)
-                //{
-                //    Console.WriteLine("NeighborID={0}: Attribute={1}, Distance={2}", cur.neighborID, cur.attribute, cur.distance );
-                //}
-                //compute z-score and add results to ComputationData class for output
-                //write to console
+                
                 Console.Write("{0},", i);
 
                 double temp = Getis_Ord_Stat(neighbors);
@@ -210,22 +197,14 @@ namespace Taxi_Spark_Linux
             }
             Console.WriteLine("Computation Complete;\nWriting output to: output.json");
 
-            //output data to json file
+            //output data to json file (Currently Not Working)
             //string jsonString;
             //jsonString = JsonConvert.SerializeObject(computationData, Formatting.Indented);
             //File.WriteAllText("output.Json", jsonString);
 
         }
 
-        /*
-        //Compute Getis-Ord Statistic and add z-score to output list
-                computationData.taxiZoneData.Add(new TaxiZoneData() { zoneID = i, zscore = Getis_Ord.Getis_Ord_Stat(neighbors)});
-                neighbors.Clear();
-
-                //Console output to display computation 
-                Console.Write(String.Format("\rProgress: {0}/{1} - {2:P}", i, num_taxi_zones, i/num_taxi_zones));
-
-        */
+        
         //Queries:
 
         /// <summary>
@@ -331,27 +310,6 @@ namespace Taxi_Spark_Linux
         {
             double _sum1 = 0, _sum2 = 0, _sum3 = 0, _X = 0, _S = 0;
 
-            /*
-            //Serial Version
-            //compute sum 1
-            double _sum1 = Sum1(ref neighbors);
-
-
-            //compute sum 2
-            double _sum2 = Sum2(ref neighbors);
-
-
-            //compute sum 3
-            double _sum3 = Sum3(ref neighbors);
-
-
-            //compute X
-            double _X = X(ref neighbors);
-
-
-            //compute S
-            double _S = S(ref neighbors, _X);
-            */
             //Parallel Version
 
             //TaskFactory to launch tasks, list of tasks to for task management, uses default TaskScheduler
